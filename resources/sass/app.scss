@@ -4,5 +4,116 @@
 // Variables
 @import 'variables';
 
+$list-group-border-color: none;
+$list-group-item-padding-y:  17px;
+$list-group-item-padding-x:  15px;
+
+//accordion
+
+$accordion-bg:white;
+$accordion-padding-y:                     1rem;
+$accordion-padding-x:                     1.25rem;
+$accordion-border-color:   none;
+$accordion-border-radius: none;
+$accordion-inner-border-radius: none;
+$accordion-button-focus-border-color: none;
+$accordion-button-focus-border-color: none;
+$accordion-button-focus-box-shadow:  none;
+$accordion-button-active-bg: white;
+$accordion-button-active-color: blue;
+
+
+
+
+
 // Bootstrap
+
+@import "bootstrap-icons/font/bootstrap-icons.scss";
 @import 'bootstrap/scss/bootstrap';
+
+
+body{
+    background: white !important;
+}
+
+.toggle-icon{
+    width: 48px;
+    height: 48px;
+    padding: 10px;
+}
+
+.form-control{
+
+    border-radius: 0;
+
+}
+
+.form-control:focus{
+    outline: none;
+}
+
+.image{
+    cursor: pointer;
+}
+
+.fs-base{
+    font-size: 1rem;
+}
+
+.sidebar{
+    max-width: 250px !important;
+}
+
+.accordion-body .list-group-item{
+    padding: 0.7rem !important;
+}
+
+.create-contact-img > div{
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    padding: 10px;
+    background: rgba(0,0,0,.4);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.create-contact-img > div > svg
+{
+    fill: white;
+}
+
+.noImg{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid $primary;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+}
+
+.showNoImg{
+    width: 162px;
+    height: 162px;
+    border-radius: 50%;
+    border: 1px solid $primary;
+    font-weight: 700;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 55px;
+}
+
+
+

@@ -8,4 +8,25 @@ use Illuminate\Database\Eloquent\Model;
 class Contact extends Model
 {
     use HasFactory;
+
+    public static function getFirstLetter($word){
+        $words = explode(" ", $word);
+
+        $fLetter =  "";
+
+        $fLetter .= $words[0][0];
+
+
+
+        return $fLetter;
+    }
+
+    public static function randBackgroundColor(){
+        $background_colors = array('#282E33', '#25373A', '#164852', '#495E67', '#FF3838');
+
+        $count = count($background_colors)-1;
+        $randNumber=rand(0,$count);
+        $randBgColor= $background_colors[$randNumber];
+        return $randBgColor;
+    }
 }

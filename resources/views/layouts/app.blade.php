@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Contact') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,10 +18,14 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+        <nav class="navbar navbar-expand-md navbar-light bg-white position-sticky top-0 " style="z-index: 1000">
+            <div class="container-fluid">
+                <div class="toggle-icon">
+                    <svg focusable="false" viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg>
+                </div>
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img src="{{asset('localImages/contact.png')}}" width="40px" height="40px" alt="">
+                    {{ config('app.name', 'Contact') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -72,9 +76,36 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
+        <main class="">
+            <div class="row">
+
+                @guest
+
+                    @yield('content')
+
+                @endguest
+
+                @auth
+
+                   <div class="row mt-0">
+                       <div class="col-3">
+                           @include('templates.sideBar')
+                       </div>
+
+                       <div class="col-8">
+                           @yield('content')
+                       </div>
+                   </div>
+
+                @endauth
+            </div>
+
+
+
+
         </main>
+
+
     </div>
 </body>
 </html>
