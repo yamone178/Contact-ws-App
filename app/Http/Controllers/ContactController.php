@@ -45,6 +45,7 @@ class ContactController extends Controller
     {
 
 
+
         $contact= new Contact();
         $contact->firstName= $request->firstName;
         $contact->lastName= $request->lastName;
@@ -64,7 +65,11 @@ class ContactController extends Controller
        }
 
 
+
+
         $contact->save();
+
+
 
 
         return  redirect()->route('contact.index');

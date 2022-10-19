@@ -12,6 +12,7 @@ class Contact extends Model
     public static function getFirstLetter($word){
         $words = explode(" ", $word);
 
+
         $fLetter =  "";
 
         $fLetter .= $words[0][0];

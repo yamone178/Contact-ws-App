@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container ">
+    <div class="container-fluid ">
         <div class="row">
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
@@ -9,7 +9,6 @@
                          <div class="d-table table-borderless table-hover w-100 ">
 
                             <div class="d-table-row ">
-                                <h6 class=" fw-bold d-table-cell">#</h6>
                                 <h6 class=" fw-bold d-table-cell">Name</h6>
                                 <h6 class=" fw-bold d-table-cell">Email</h6>
                                 <h6 class=" fw-bold d-table-cell">Phone</h6>
@@ -17,7 +16,7 @@
                                 <h6 class=" fw-bold d-table-cell">Action</h6>
                             </div>
 
-
+                            <p class="badge bg-dark"> Contacts : {{\App\Models\Contact::count()}}</p>
 
 
                             <tbody>
@@ -27,28 +26,27 @@
 
 
                                 <a href="{{route('contact.show',$contact->id)}}"  class="tr  text-decoration-none text-black  d-table-row contact-item" style="cursor: pointer">
-                                    <div class="d-table-cell">{{$contact->id}}</div>
                                     <div class="d-table-cell ">
 
 
-{{--                                        @if($contact->image != null)--}}
-{{--                                            <img src="{{asset('storage/images/'.$contact->image)}}" width="40px" height="40px" class=" contact-img{{$contact->id}} rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">--}}
+                                        @if($contact->image != null)
+                                            <img src="{{asset('storage/images/'.$contact->image)}}" width="40px" height="40px" class=" contact-img{{$contact->id}} rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
-{{--                                        @else--}}
+                                        @else
 
 
 
-{{--                                            <div class="d-inline-block me-2">--}}
-{{--                                                <span class="noImg " style="background: {{\App\Models\Contact::randBackgroundColor()}}"> {{ucfirst(\App\Models\Contact::getFirstLetter($contact->firstName))}}</span>--}}
+                                            <div class="d-inline-block me-2">
+                                                <span class="noImg " style="background: {{\App\Models\Contact::randBackgroundColor()}}"> {{ucfirst(\App\Models\Contact::getFirstLetter($contact->firstName))}}</span>
 
-{{--                                            </div>--}}
+                                            </div>
 
-{{--                                        @endif--}}
+                                        @endif
                                         {{ucwords($contact->firstName)}}
                                     </div>
                                     <div class="d-table-cell">{{$contact->email}}</div>
                                     <div class="d-table-cell">{{$contact->phone}}</div>
-                                    <div class="d-table-cell">{{$contact->job}}</div>
+                                    <div class="d-table-cell">{{$contact->jobTitle}}</div>
 
                                     <div class="d-table-cell position-relative">
 

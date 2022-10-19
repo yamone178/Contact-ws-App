@@ -19,13 +19,12 @@
 
                                 @else
 
-                                    <img src="{{asset('localImages/profile.png')}}" width="150px" height="150px" class="rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+{{--                                    <img src="{{asset('localImages/profile.png')}}" width="150px" height="150px" class="rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">--}}
 
+                                    <div class="d-inline-block me-2">
+                                        <span class="showNoImg " style="background: {{\App\Models\Contact::randBackgroundColor()}}"> {{ucfirst(\App\Models\Contact::getFirstLetter($contact->firstName))}}</span>
 
-                                    {{--                                    <div class="d-inline-block me-2">--}}
-{{--                                        <span class="showNoImg " style="background: {{\App\Models\Contact::randBackgroundColor()}}"> {{ucfirst(\App\Models\Contact::getFirstLetter($contact->name))}}</span>--}}
-
-{{--                                    </div>--}}
+                                    </div>
 
                                 @endif
 
@@ -52,6 +51,15 @@
                                     <span>{{$contact->phone}}</span>
 
                                 </div>
+
+
+                                @isset($contact->jobTitle)
+                                    <div class=" d-flex align-items-center  ">
+                                        <i class="bi bi-person-workspace me-3 fa-fw"></i>
+                                        <span>{{$contact->jobTitle}}</span>
+
+                                    </div>
+                                @endisset
 
 
 

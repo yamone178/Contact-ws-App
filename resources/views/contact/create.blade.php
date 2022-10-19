@@ -83,7 +83,6 @@
                                     name="email"
                                     class="form-control
                                     @error('email') is-invalid @enderror"
-                                    placeholder="Password"
                                 >
                                 @error('email')
                                 <span class="invalid-feedback">
@@ -101,7 +100,7 @@
                                     name="phone"
                                     class="form-control
                                     @error('firstName') is-invalid @enderror
-                                    " placeholder="phone"
+                                    "
                                 >
                                 @error('phone')
                                 <span class="invalid-feedback">
@@ -119,7 +118,7 @@
                                     form="contactCreateForm"
                                     type="text"
                                     name="jobTitle"
-                                    class="form-control" placeholder="Password">
+                                    class="form-control">
 
                             </div>
 
@@ -131,7 +130,7 @@
                                     form="contactCreateForm"
                                     type="text"
                                     name="birthday"
-                                    class="form-control" placeholder="Password">
+                                    class="form-control">
                             </div>
 
                             <div class="mt-3">
@@ -140,7 +139,7 @@
 
                                     form="contactCreateForm"
                                     type="text"
-                                    name="note" class="form-control " placeholder="Password" >
+                                    name="note" class="form-control " >
                                     {{old('note')}}
                                 </textarea>
 

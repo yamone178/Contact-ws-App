@@ -28,7 +28,7 @@ $accordion-button-active-color: blue;
 
 // Bootstrap
 
-@import "bootstrap-icons/font/bootstrap-icons.scss";
+@import "bootstrap-icons/font/bootstrap-icons.css";
 @import 'bootstrap/scss/bootstrap';
 
 
@@ -114,6 +114,29 @@ body{
     align-items: center;
     font-size: 55px;
 }
+
+//table cell
+.d-table a{
+    text-decoration: none;
+    color: $dark;
+}
+
+
+
+.d-table-row:hover{
+
+    background: #e2e8f0;
+}
+
+.d-table{
+    table-layout: fixed;
+    width: 100%;
+}
+.d-table-cell{
+    height: 70px;
+    vertical-align: middle !important;
+}
+
 
 
 
