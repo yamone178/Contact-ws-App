@@ -56,13 +56,18 @@ class ContactController extends Controller
         $contact->note= $request->note;
 
 
-       if ($request->hasFile('image')){
+//       if ($request->hasFile('image')){
+//
+//            $newName= uniqid().'contact_img.'.$request->file('image')->extension();
+//            $request->file('image')->storeAs('public/images', $newName);
+//
+//           $contact->image = $newName;
+//       }
 
-            $newName= uniqid().'contact_img.'.$request->file('image')->extension();
-            $request->file('image')->storeAs('public/images', $newName);
-
-           $contact->image = $newName;
-       }
+        if ($request->hasFile('image')){
+            $newName= $request->file('image')->store('public/image');
+            $contact->image= $newName;
+        }
 
 
 
@@ -119,15 +124,9 @@ class ContactController extends Controller
         $contact->note= $request->note;
 
 
-
         if ($request->hasFile('image')){
-
-            Storage::delete('public/images'.$contact->image);
-
-            $newName= uniqid().'contact_img.'.$request->file('image')->extension();
-            $request->file('image')->storeAs('public/images', $newName);
-
-            $contact->image = $newName;
+            $newName= $request->file('image')->store('public/image');
+            $contact->image= $newName;
         }
 
         $contact->update();

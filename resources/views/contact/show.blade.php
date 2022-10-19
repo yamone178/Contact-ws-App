@@ -15,7 +15,7 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex align-items-center">
                                 @if($contact->image != null)
-                                    <img src="{{asset('storage/images/'.$contact->image)}}" width="150px" height="150px" class="rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+                                    <img src="{{asset(Storage::url($contact->image))}}" width="150px" height="150px" class="rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
                                 @else
 
@@ -51,6 +51,14 @@
                                     <span>{{$contact->phone}}</span>
 
                                 </div>
+
+                                @isset($contact->birthday)
+                                    <div class=" d-flex align-items-center  ">
+                                        <i class="bi bi-calendar-date me-3 fa-fw"></i>
+                                        <span>{{$contact->birthday}}</span>
+
+                                    </div>
+                                @endisset
 
 
                                 @isset($contact->jobTitle)

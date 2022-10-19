@@ -30,7 +30,7 @@
 
 
                                         @if($contact->image != null)
-                                            <img src="{{asset('storage/images/'.$contact->image)}}" width="40px" height="40px" class=" contact-img{{$contact->id}} rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+                                            <img src="{{asset(Storage::url($contact->image))}}" width="40px" height="40px" class=" contact-img{{$contact->id}} rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
                                         @else
 

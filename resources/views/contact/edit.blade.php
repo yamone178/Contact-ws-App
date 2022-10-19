@@ -14,7 +14,8 @@
 
 
 
-                                <img src="{{asset('storage/images/'.old('image',$contact->image))}}"  class=" outputImg rounded-circle contact-Img-area position-relative
+
+                                <img src="{{old('image',Storage::url($contact->image))}}"  class=" outputImg rounded-circle contact-Img-area position-relative
                                {{$contact->image != null ? 'd-block': 'd-none'}}" width="150px" height="150px" style="object-fit: cover" alt="">
 
                                 <div class="">
