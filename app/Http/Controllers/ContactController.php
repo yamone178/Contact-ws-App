@@ -147,4 +147,9 @@ class ContactController extends Controller
         $contact->delete();
         return redirect()->back();
     }
+
+    public function multipleDelete(\Illuminate\Http\Request $request){
+        Contact::destroy($request->checks);
+        return redirect()->back();
+    }
 }

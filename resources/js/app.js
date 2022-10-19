@@ -1,6 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
 import './custom/createAndChangeImg'
+import './custom/checkBoxes'
 
 
 // let image= document.querySelector('.image');

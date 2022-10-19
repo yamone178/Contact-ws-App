@@ -6,6 +6,12 @@
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
+
+                        <form action="{{route('contact.multipleDelete')}}" method="post" id="deleteMultipleForm">
+                            @csrf
+                          <input  class="form-check-input me-3 checkAll" type="checkbox" value="" id="flexCheckDefault">
+                            <button class="btn btn-danger" form="deleteMultipleForm">Delete</button>
+                        </form>
                          <div class="d-table table-borderless table-hover w-100 ">
 
                             <div class="d-table-row ">
@@ -29,21 +35,28 @@
                                     <div class="d-table-cell ">
 
 
-                                        @if($contact->image != null)
-                                            <img src="{{asset(Storage::url($contact->image))}}" width="40px" height="40px" class=" contact-img{{$contact->id}} rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
-
-                                        @else
+                                           <div class=" d-flex  align-items-center">
+                                               <input  class="form-check-input me-3 check-box" name="checks[]" form="deleteMultipleForm" type="checkbox" value="{{$contact->id}}" id="flexCheckDefault{{$contact->id}}">
 
 
 
-                                            <div class="d-inline-block me-2">
-                                                <span class="noImg " style="background: {{\App\Models\Contact::randBackgroundColor()}}"> {{ucfirst(\App\Models\Contact::getFirstLetter($contact->firstName))}}</span>
 
-                                            </div>
+                                               @if($contact->image != null)
+                                                   <img src="{{asset(Storage::url($contact->image))}}" width="40px" height="40px" class=" contact-img{{$contact->id}} rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
-                                        @endif
-                                        {{ucwords($contact->firstName)}}
-                                    </div>
+                                               @else
+
+
+
+                                                   <div class="d-inline-block me-2">
+                                                       <span class="noImg " style="background: {{\App\Models\Contact::randBackgroundColor()}}"> {{ucfirst(\App\Models\Contact::getFirstLetter($contact->firstName))}}</span>
+
+                                                   </div>
+
+                                               @endif
+                                               {{ucwords($contact->firstName)}}
+
+                                           </div>                                    </div>
                                     <div class="d-table-cell">{{$contact->email}}</div>
                                     <div class="d-table-cell">{{$contact->phone}}</div>
                                     <div class="d-table-cell">{{$contact->jobTitle}}</div>

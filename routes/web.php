@@ -21,3 +21,4 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::resource('contact',\App\Http\Controllers\ContactController::class);
+Route::post('/contact/multiple-delete',[\App\Http\Controllers\ContactController::class,'multipleDelete'])->name('contact.multipleDelete');
