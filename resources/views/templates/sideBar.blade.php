@@ -49,6 +49,34 @@
 
             </div>
 
+            <a href="{{route('contact.index')}}" class="list-group-item fs-5">
+
+            </a>
+
+            <form action="{{route('contact.import')}}" method="post" enctype="multipart/form-data">
+                @csrf
+                <input type="file" name="contacts">
+
+                <button class="btn btn-lg">
+
+                     <span class=" me-3">
+                    <svg width="20" height="20" viewBox="0 0 24 24" class="NSy2Hd cdByRd RTiFqe null"><path d="M4 15h2v3h12v-3h2v3c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2m4.41-7.59L11 7.83V16h2V7.83l2.59 2.59L17 9l-5-5-5 5 1.41 1.41z"></path></svg>                </span>
+                    <span>Import</span>
+
+                </button>
+
+
+            </form>
+
+            <a href="{{route('contact.export')}}" class="list-group-item fs-5">
+                <span class=" me-3">
+                    <i class="bi bi-cloud-arrow-down"></i>
+                </span>
+                    <span>Export</span>
+            </a>
+
+
+
 
         </div>
     </div>

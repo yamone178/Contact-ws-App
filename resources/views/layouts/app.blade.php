@@ -107,5 +107,19 @@
 
 
     </div>
+
+    <script>
+        window.addEventListener('load',() =>{
+            @if(session('status'))
+            showToast("{{session('status')}}")
+            @endif
+
+
+        })
+
+    </script>
+
+
+
 </body>
 </html>

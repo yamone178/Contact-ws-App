@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TestExport;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
+use Illuminate\Http\Request;
+use App\Imports\TestImport;
 use App\Models\Contact;
-use http\Env\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ContactController extends Controller
 {
@@ -77,7 +80,7 @@ class ContactController extends Controller
 
 
 
-        return  redirect()->route('contact.index');
+        return  redirect()->route('contact.index')->with('status','contact is created');
     }
 
     /**
@@ -114,7 +117,6 @@ class ContactController extends Controller
      */
     public function update(UpdateContactRequest $request, Contact $contact)
     {
-
         $contact->firstName= $request->firstName;
         $contact->lastName= $request->lastName;
         $contact->email= $request->email;
@@ -148,8 +150,18 @@ class ContactController extends Controller
         return redirect()->back();
     }
 
-    public function multipleDelete(\Illuminate\Http\Request $request){
+    public function multipleDelete(Request $request){
         Contact::destroy($request->checks);
-        return redirect()->back();
+        return  redirect()->back();
+    }
+
+    public function export(){
+        return Excel::download(new TestExport, 'contact.xlsx');
+    }
+
+    public function import(Request $request){
+         Excel::import(new TestImport, $request->file('contacts'));
+
+        return redirect()->route('contact.index')->with('success');
     }
 }

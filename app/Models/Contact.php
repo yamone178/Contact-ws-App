@@ -9,6 +9,8 @@ class Contact extends Model
 {
     use HasFactory;
 
+    protected $fillable=['id','firstName','lastName','phone','email','jobTitle'];
+
     public static function getFirstLetter($word){
         $words = explode(" ", $word);
 
@@ -29,5 +31,12 @@ class Contact extends Model
         $randNumber=rand(0,$count);
         $randBgColor= $background_colors[$randNumber];
         return $randBgColor;
+    }
+
+
+    public $selected= array();
+
+    public static function getSelectCount() {
+        return 'how are you';
     }
 }

@@ -128,6 +128,8 @@ body{
     background: #e2e8f0;
 }
 
+
+
 .d-table{
     table-layout: fixed;
     width: 100%;
@@ -136,6 +138,47 @@ body{
     height: 70px;
     vertical-align: middle !important;
 }
+
+
+.action{
+    visibility: hidden;
+}
+
+.contact-select{
+    display: none;
+}
+
+.contact-select:checked .checkLabel .noImg{
+    display: none;
+
+}
+
+.d-table-row:hover .action{
+    visibility: visible !important;
+}
+
+
+
+.d-table-row:hover .contact-select{
+    display: block;
+}
+
+.d-table-row:hover .noImg{
+    transition: 0.5s linear;
+    display: none;
+}
+
+
+.contact-select:checked{
+    display: block;
+}
+
+
+.dropdown-toggle::after{
+    display: none !important;
+}
+
+
 
 
 

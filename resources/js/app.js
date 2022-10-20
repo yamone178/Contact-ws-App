@@ -2,6 +2,7 @@ import './bootstrap';
 import '../css/app.css';
 import './custom/createAndChangeImg'
 import './custom/checkBoxes'
+import './custom/alert'
 
 
 // let image= document.querySelector('.image');
@@ -13,3 +14,7 @@ import './custom/checkBoxes'
 //         imageInput.click()
 //     })
 // }
+
+
+
+

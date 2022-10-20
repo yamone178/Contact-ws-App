@@ -17,7 +17,9 @@ if (contactImgInput){
         let currentFile=  this.files[0];
 
 
+
         let reader= new FileReader();
+        console.log(reader)
         reader.onload=function (e){
 
             console.log(e.target.result);
