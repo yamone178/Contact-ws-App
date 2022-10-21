@@ -4,7 +4,7 @@ let checkAll= document.getElementById('flexCheckDefault');
 let checkBoxes= document.querySelectorAll('.check-box');
 
 
-window.selectItems = []
+let selectItems = []
 
 
 if (checkAll){
