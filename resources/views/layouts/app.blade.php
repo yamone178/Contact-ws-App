@@ -88,11 +88,11 @@
                 @auth
 
                    <div class="d-flex mt-0">
-                       <div class="">
+                       <div class="col-3">
                            @include('templates.sideBar')
                        </div>
 
-                       <div class="">
+                       <div class="col-9">
                            @yield('content')
                        </div>
                    </div>

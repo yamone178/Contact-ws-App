@@ -174,8 +174,8 @@ class ContactController extends Controller
     }
 
     public function restore($id){
-        return $id;
-        $contact= Contact::withTrashed();
+
+        $contact= Contact::withTrashed()->findOrFail($id);
         $contact->restore();
 
         return redirect()->route('contact.index');
