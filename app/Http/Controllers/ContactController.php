@@ -11,6 +11,7 @@ use App\Models\Contact;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use Nette\Utils\Paginator;
 
 class ContactController extends Controller
 {
@@ -178,14 +179,22 @@ class ContactController extends Controller
         $contact= Contact::withTrashed()->findOrFail($id);
         $contact->restore();
 
-        return redirect()->route('contact.index');
+        return redirect()->back();
     }
 
     public function multipleDelete(Request $request){
 
 
-        Contact::destroy($request->checks);
 
+        $contacts= Contact::withTrashed()->whereIn('id',$request->checks)->get();
+
+           foreach ($contacts as $contact){
+               if ($contact->trashed()){
+                   $contact->forceDelete();
+               }
+           }
+
+        Contact::destroy($request->checks);
         return  redirect()->back();
     }
 

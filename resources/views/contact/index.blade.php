@@ -41,8 +41,9 @@
                              <div class="">
                                  <p class="badge bg-dark"> Contacts : {{\App\Models\Contact::count()}}</p>
 
-                                 <p class="badge bg-dark"> SelectedItems :
-
+                                 <p class="badge bg-dark"> Selected :
+                                     <span class="count">0</span>
+                                      in  {{\App\Models\Contact::all()->count()}}
 
                                  </p>
 

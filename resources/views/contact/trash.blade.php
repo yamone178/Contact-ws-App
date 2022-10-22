@@ -8,8 +8,25 @@
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
-                        <table class="table table-borderless table-hover align-middle ">
-                            <thead class="table-light ">
+                        <form action="{{route('contact.multipleDelete')}}" method="post" id="deleteMultipleForm">
+                            @csrf
+
+                            <input
+                                class="form-check-input me-3 checkAll"
+                                type="checkbox"
+                                value=""
+                                id="flexCheckDefault"
+                            >
+                            <button
+                                class="btn btn-danger multipleDelBtn"
+                                form="deleteMultipleForm"
+                            >
+                                Delete
+                            </button>
+                        </form>
+
+                        <table class="table table-hover table-borderless table-hover align-middle ">
+                            <thead class="table-light">
                             <tr class="">
                                 <th>Name</th>
                                 <th>Email</th>
@@ -20,23 +37,51 @@
 
                             </thead>
 
+
                             <tbody>
+
+                            <tr>
+                                <td>
+                                    <p class="badge bg-dark"> Selected :
+                                        <span class="count">0</span>
+                                        in  {{\App\Models\Contact::onlyTrashed()->count()}}
+
+                                    </p>
+                                </td>
+                            </tr>
 
                             @forelse($trashItems as $trashItem)
                                 <tr>
                                     <td>
-                                        @if($trashItem->image != null)
-                                            <img src="{{asset('public/image/'.$trashItem->image)}}" width="40px" height="40px" class="rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+                                        <div class=" d-flex  align-items-center">
 
-                                        @else
+                                            <input
+                                                class="form-check-input  me-3 check-box contact-select "
+                                                name="checks[]" form="deleteMultipleForm" type="checkbox"
+                                                value="{{$trashItem->id}}" id="flexCheckDefault{{$trashItem->id}}"
+                                            >
 
-                                            <div class="d-inline-block me-2">
-                                                <span class="noImg " style="background: {{\App\Models\Contact::randBackgroundColor()}}"> {{ucfirst(\App\Models\Contact::getFirstLetter($trashItem->firstName))}}</span>
 
-                                            </div>
+                                            <label for="check{{$trashItem->id}}" class="">
+                                                @if($trashItem->image != null)
+                                                    <img src="{{asset(Storage::url($trashItem->image))}}" width="40px" height="40px" class=" contact-img{{$trashItem->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
-                                        @endif
-                                        {{ucwords($trashItem->name)}}
+                                                @else
+
+
+
+                                                    <div class="d-inline-block me-2">
+                                                        <span class="noImg imgArea" style="background: {{\App\Models\Contact::randBackgroundColor()}}"> {{ucfirst(\App\Models\Contact::getFirstLetter($trashItem->firstName))}}</span>
+
+                                                    </div>
+
+                                                @endif
+                                                {{ucwords($trashItem->firstName)}}
+                                            </label>
+
+
+
+                                        </div>
                                     </td>
                                     <td>{{$trashItem->email}}</td>
                                     <td>{{$trashItem->phone}}</td>
