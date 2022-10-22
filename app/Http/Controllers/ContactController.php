@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateContactRequest;
 use Illuminate\Http\Request;
 use App\Imports\TestImport;
 use App\Models\Contact;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -57,6 +58,7 @@ class ContactController extends Controller
         $contact->jobTitle= $request->jobTitle;
         $contact->birthday= $request->birthday;
         $contact->note= $request->note;
+        $contact->user_id = Auth::user()->id;
 
 
 //       if ($request->hasFile('image')){
@@ -124,6 +126,7 @@ class ContactController extends Controller
         $contact->jobTitle= $request->jobTitle;
         $contact->birthday= $request->birthday;
         $contact->note= $request->note;
+        $contact->user_id = Auth::id();
 
 
         if ($request->hasFile('image')){
@@ -143,20 +146,53 @@ class ContactController extends Controller
      * @param  \App\Models\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contact $contact)
+    public function destroy($id)
     {
-        Storage::delete('storage/images/'.$contact->image);
+
+
+
+        $contact= Contact::withTrashed()->findOrFail($id);
+
+
+        //forceDelete
+        if ($contact->trashed()){
+
+            Storage::delete('public/image/'.$contact->image);
+            $contact->forceDelete();
+        }
+
+        //softDelete
         $contact->delete();
         return redirect()->back();
     }
 
+    public function trash(){
+
+        $trashItems=  Contact::onlyTrashed()->latest('id')
+                        ->paginate(6)->withQueryString();
+        return view('contact.trash', compact('trashItems'));
+    }
+
+    public function restore($id){
+        return $id;
+        $contact= Contact::withTrashed();
+        $contact->restore();
+
+        return redirect()->route('contact.index');
+    }
+
     public function multipleDelete(Request $request){
+
+
         Contact::destroy($request->checks);
+
         return  redirect()->back();
     }
 
+
+
     public function export(){
-        return Excel::download(new TestExport, 'contact.xlsx');
+        return Excel::download(new TestExport, 'contact.csv');
     }
 
     public function import(Request $request){

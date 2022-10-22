@@ -43,6 +43,7 @@
 
                                  <p class="badge bg-dark"> SelectedItems :
 
+
                                  </p>
 
                              </div>
@@ -63,11 +64,10 @@
 
                                                <input
                                                    id="check{{$contact->id}}"
-                                                   class="form-check-input  me-3 check-box contact-select" name="checks[]" form="deleteMultipleForm" type="checkbox" value="{{$contact->id}}" id="flexCheckDefault{{$contact->id}}">
-
-
-
-
+                                                   class="form-check-input  me-3 check-box contact-select"
+                                                   name="checks[]" form="deleteMultipleForm" type="checkbox"
+                                                   value="{{$contact->id}}" id="flexCheckDefault{{$contact->id}}"
+                                               >
 
 
                                                <label for="check{{$contact->id}}" class="checkLabel">
@@ -89,7 +89,8 @@
 
 
 
-                                           </div>                                    </div>
+                                           </div>
+                                    </div>
                                     <div class="d-table-cell">{{$contact->email}}</div>
                                     <div class="d-table-cell">{{$contact->phone}}</div>
                                     <div class="d-table-cell">{{$contact->jobTitle}}</div>

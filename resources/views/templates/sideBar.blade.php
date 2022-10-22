@@ -1,6 +1,6 @@
 
 
-<div class="bg-white shadow-sm p-3 position-relative min-vh-100  position-fixed" style="z-index: 1; width: 270px">
+<div class="bg-white shadow-sm p-3  min-vh-100 " style="z-index: 1; width: 270px">
 
     <div class="">
         <div class="list-group fs-base">
@@ -73,6 +73,22 @@
                     <i class="bi bi-cloud-arrow-down"></i>
                 </span>
                     <span>Export</span>
+            </a>
+
+            <a href="" class="list-group-item fs-5">
+                <span class=" me-3">
+                    <i class="bi bi-printer"></i>
+                </span>
+                <span>Print</span>
+            </a>
+
+            <hr>
+
+            <a href="{{route('contact.trash')}}" class="list-group-item fs-5">
+                <span class=" me-3">
+                    <i class="bi bi-trash3"></i>
+                </span>
+                <span>Trash</span>
             </a>
 
 

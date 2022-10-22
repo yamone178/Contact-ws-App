@@ -19,8 +19,13 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::post('/contact/export',[\App\Http\Controllers\ContactController::class,'import'])->name('contact.import');
-Route::get('/contact/export',[\App\Http\Controllers\ContactController::class,'export'])->name('contact.export');
 Route::resource('contact',\App\Http\Controllers\ContactController::class);
-Route::post('/contact/multiple-delete',[\App\Http\Controllers\ContactController::class,'multipleDelete'])->name('contact.multipleDelete');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/trash',[\App\Http\Controllers\ContactController::class,'trash'])->name('contact.trash');
+Route::post('/restore/{id}',[\App\Http\Controllers\ContactController::class,'restore'])->name('contact.restore');
+Route::post('/multiple-delete',[\App\Http\Controllers\ContactController::class,'multipleDelete'])->name('contact.multipleDelete');
+
+
+Route::post('/import',[\App\Http\Controllers\ContactController::class,'import'])->name('contact.import');
+Route::get('/export',[\App\Http\Controllers\ContactController::class,'export'])->name('contact.export');
+
