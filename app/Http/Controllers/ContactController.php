@@ -157,8 +157,9 @@ class ContactController extends Controller
 
         //forceDelete
         if ($contact->trashed()){
-
-            Storage::delete('public/image/'.$contact->image);
+                if ($contact->image != null){
+                    Storage::delete($contact->image);
+                }
             $contact->forceDelete();
         }
 
@@ -190,6 +191,9 @@ class ContactController extends Controller
 
            foreach ($contacts as $contact){
                if ($contact->trashed()){
+                   if ($contact->image != null){
+                       Storage::delete($contact->image);
+                   }
                    $contact->forceDelete();
                }
            }
