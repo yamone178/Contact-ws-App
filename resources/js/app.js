@@ -16,5 +16,9 @@ import './custom/alert'
 // }
 
 
+window.forward=(route)=>{
+    location.href = route
+}
+
 
 

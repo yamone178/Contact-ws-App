@@ -51,7 +51,7 @@
                             </tr>
 
                             @forelse($trashItems as $trashItem)
-                                <tr>
+                                <tr class="table-row" onclick=window.forward("{{route('contact.show',$trashItem->id)}}")>
                                     <td>
                                         <div class=" d-flex  align-items-center">
 
