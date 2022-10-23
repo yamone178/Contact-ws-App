@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Imports\TestImport;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Nette\Utils\Paginator;
@@ -22,7 +23,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contacts= Contact::latest('id')
+        $contacts= Contact::where('user_id',Auth::id())
+            ->latest('id')
             ->paginate(6)
             ->withQueryString()
         ;
@@ -94,6 +96,7 @@ class ContactController extends Controller
      */
     public function show(Contact $contact)
     {
+        Gate::authorize('view',$contact);
         return  view('contact.show', compact('contact'));
     }
 
@@ -152,7 +155,8 @@ class ContactController extends Controller
 
 
 
-        $contact= Contact::withTrashed()->findOrFail($id);
+        $contact= Contact::where('user_id',Auth::id())
+                    ->withTrashed()->findOrFail($id);
 
 
         //forceDelete
@@ -170,14 +174,16 @@ class ContactController extends Controller
 
     public function trash(){
 
-        $trashItems=  Contact::onlyTrashed()->latest('id')
+        $trashItems=  Contact::where('user_id',Auth::id())
+                    ->onlyTrashed()->latest('id')
                         ->paginate(6)->withQueryString();
         return view('contact.trash', compact('trashItems'));
     }
 
     public function restore($id){
 
-        $contact= Contact::withTrashed()->findOrFail($id);
+        $contact= Contact::where('user_id',Auth::id())
+                    ->withTrashed()->findOrFail($id);
         $contact->restore();
 
         return redirect()->back();
@@ -187,7 +193,10 @@ class ContactController extends Controller
 
 
 
-        $contacts= Contact::withTrashed()->whereIn('id',$request->checks)->get();
+        $contacts= Contact::where('user_id',Auth::id())
+                    ->withTrashed()
+                    ->whereIn('id',$request->checks)
+                    ->get();
 
            foreach ($contacts as $contact){
                if ($contact->trashed()){

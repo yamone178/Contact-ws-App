@@ -10,6 +10,8 @@ class ContactPolicy
 {
     use HandlesAuthorization;
 
+
+
     /**
      * Determine whether the user can view any models.
      *
@@ -18,7 +20,7 @@ class ContactPolicy
      */
     public function viewAny(User $user)
     {
-        //
+
     }
 
     /**
@@ -30,7 +32,7 @@ class ContactPolicy
      */
     public function view(User $user, Contact $contact)
     {
-        //
+        return $user->id === $contact->user_id;
     }
 
     /**
@@ -41,7 +43,7 @@ class ContactPolicy
      */
     public function create(User $user)
     {
-        //
+
     }
 
     /**
@@ -53,7 +55,7 @@ class ContactPolicy
      */
     public function update(User $user, Contact $contact)
     {
-        //
+        return $user->id === $contact->user_id;
     }
 
     /**

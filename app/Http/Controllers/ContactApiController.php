@@ -16,7 +16,7 @@ class ContactApiController extends Controller
      */
     public function index()
     {
-        $contacts= Contact::latest('id')->get();
+        $contacts= Contact::where('user_id',Auth::id())->latest('id')->get();
         return ContactResource::collection($contacts);
 
     }
@@ -46,7 +46,7 @@ class ContactApiController extends Controller
         $contact->user_id= Auth::id();
 
         if ($request->hasFile('image')){
-            $newPath= $request->file('image')->store('public/image/'.$request->image);
+            $newPath= $request->file('image')->store('public/image/');
             $contact->image= $newPath;
         }
 
@@ -131,7 +131,7 @@ class ContactApiController extends Controller
             $contact->birthday= $request->birthday;
         }
         if ($request->hasFile('image')){
-            $newPath= $request->file('image')->store('public/image/'.$request->image);
+            $newPath= $request->file('image')->store('public/image/');
             $contact->image= $newPath;
         }
 

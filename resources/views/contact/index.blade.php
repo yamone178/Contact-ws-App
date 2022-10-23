@@ -39,7 +39,7 @@
                             </div>
 
                              <div class="">
-                                 <p class="badge bg-dark"> Contacts : {{\App\Models\Contact::count()}}</p>
+                                 <p class="badge bg-dark"> Contacts : {{\App\Models\Contact::where('user_id',Auth::id())->count()}}</p>
 
                                  <p class="badge bg-dark"> Selected :
                                      <span class="count">0</span>
@@ -54,8 +54,6 @@
                             <tbody>
 
                             @forelse($contacts as $contact)
-
-
 
                                 <a href="{{route('contact.show',$contact->id)}}"  class="tr  text-decoration-none text-black  d-table-row contact-item" style="cursor: pointer">
                                     <div class="d-table-cell ">
@@ -141,8 +139,6 @@
                                     @method('delete')
 
                                 </form>
-
-
 
 
                             @empty

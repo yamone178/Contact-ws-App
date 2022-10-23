@@ -44,7 +44,7 @@
                                 <td>
                                     <p class="badge bg-dark"> Selected :
                                         <span class="count">0</span>
-                                        in  {{\App\Models\Contact::onlyTrashed()->count()}}
+                                        in  {{\App\Models\Contact::where('user_id',Auth::id())->onlyTrashed()->count()}}
 
                                     </p>
                                 </td>
@@ -109,7 +109,7 @@
 
 
 
-                        <h2 @class('text-center')>No photos to show</h2>
+                        <h2 @class('text-center')>No posts to show</h2>
                         @endforelse
 
                         </tbody>

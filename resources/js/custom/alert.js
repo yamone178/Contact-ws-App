@@ -16,13 +16,7 @@ multipleDelBtn.addEventListener('click',function (e){
     }).then((result) => {
         if (result.isConfirmed) {
 
-            showToast('contacts are deleted')
-
-            setTimeout(()=>{
                 form.submit();
-            },2000)
-
-
         }
     })
 })
