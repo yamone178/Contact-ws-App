@@ -8,7 +8,7 @@
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
-                        <form action="{{route('contact.multipleDelete')}}" method="post" id="deleteMultipleForm">
+                        <form class="mb-3" action="{{route('contact.multipleDelete')}}" method="post" id="deleteMultipleForm">
                             @csrf
 
                             <input
@@ -18,6 +18,7 @@
                                 id="flexCheckDefault"
                             >
                             <button
+                                disabled=true
                                 class="btn btn-danger multipleDelBtn"
                                 form="deleteMultipleForm"
                             >
@@ -51,9 +52,9 @@
                             </tr>
 
                             @forelse($trashItems as $trashItem)
-                                <tr class="table-row" onclick=window.forward("{{route('contact.show',$trashItem->id)}}")>
+                                <tr class="table-row">
                                     <td>
-                                        <div class=" d-flex  align-items-center">
+                                        <div class=" d-flex   align-items-center">
 
                                             <input
                                                 class="form-check-input  me-3 check-box contact-select "
@@ -62,7 +63,7 @@
                                             >
 
 
-                                            <label for="check{{$trashItem->id}}" class="">
+                                            <label for="flexCheckDefault{{$trashItem->id}}" class="">
                                                 @if($trashItem->image != null)
                                                     <img src="{{asset(Storage::url($trashItem->image))}}" width="40px" height="40px" class=" contact-img{{$trashItem->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 

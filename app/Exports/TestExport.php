@@ -3,6 +3,7 @@
 namespace App\Exports;
 
 use App\Models\Contact;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\FromCollection;
 
 class TestExport implements FromCollection
@@ -12,6 +13,6 @@ class TestExport implements FromCollection
     */
     public function collection()
     {
-        return Contact::all();
+        return Contact::where('user_id',Auth::id())->get();
     }
 }

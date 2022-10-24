@@ -123,6 +123,7 @@ class ContactController extends Controller
      */
     public function update(UpdateContactRequest $request, Contact $contact)
     {
+
         $contact->firstName= $request->firstName;
         $contact->lastName= $request->lastName;
         $contact->email= $request->email;
@@ -130,7 +131,7 @@ class ContactController extends Controller
         $contact->jobTitle= $request->jobTitle;
         $contact->birthday= $request->birthday;
         $contact->note= $request->note;
-        $contact->user_id = Auth::id();
+        $contact->user_id = auth()->user()->id;
 
 
         if ($request->hasFile('image')){

@@ -5,17 +5,6 @@ import './custom/checkBoxes'
 import './custom/alert'
 
 
-// let image= document.querySelector('.image');
-// let imageInput= document.querySelector('.imageInput')
-//
-// if (image){
-//     image.addEventListener('click',function (){
-//         console.log('click')
-//         imageInput.click()
-//     })
-// }
-
-
 window.forward=(route)=>{
     location.href = route
 }

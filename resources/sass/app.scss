@@ -116,28 +116,6 @@ body{
 }
 
 //table cell
-.d-table a{
-    text-decoration: none;
-    color: $dark;
-}
-
-
-
-.d-table-row:hover{
-
-    background: #e2e8f0;
-}
-
-
-
-.d-table{
-    table-layout: fixed;
-    width: 100%;
-}
-.d-table-cell{
-    height: 70px;
-    vertical-align: middle !important;
-}
 
 
 .action{
@@ -153,19 +131,29 @@ body{
 
 }
 
-.d-table-row:hover .action{
+.table-row:hover .action{
     visibility: visible !important;
 }
 
+.table-row:hover .imgArea{
+    display: none !important;
+}
 
 
-.d-table-row:hover .contact-select{
+
+
+
+.table-row:hover .contact-select{
     display: block;
 }
 
-.d-table-row:hover .noImg{
+.table-row:hover .noImg{
     transition: 0.5s linear;
     display: none;
+}
+
+.table-row:hover{
+    cursor: pointer;
 }
 
 
