@@ -8,7 +8,15 @@
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
-                        <form class="mb-3 d-flex align-items-center" action="{{route('contact.multipleDelete')}}" method="post" id="deleteMultipleForm">
+
+{{--                        <form action="{{route('contact.multiple-clone')}}" id="cloneMultiple" method="post">--}}
+
+{{--                            @csrf--}}
+{{--                            <button class="btn btn-primary">Clone</button>--}}
+
+{{--                        </form>--}}
+''
+                        <form class="mb-3 d-flex align-items-center multipleForm" action="{{route('contact.multipleDelete')}}" method="post" id="deleteMultipleForm">
                             @csrf
 
                             <input
@@ -24,7 +32,19 @@
                             >
                                 Delete
                             </button>
+
+                            <button
+
+                                onclick=""
+                                class="btn btn-danger multipleDelBtn clone"
+                                form="deleteMultipleForm"
+                            >
+                                Clone
+                            </button>
+
+
                         </form>
+
 
                         <table class="table table-hover table-borderless table-hover align-middle ">
                             <thead class="table-light">
@@ -58,7 +78,7 @@
 
                                             <input
                                                 class="form-check-input  me-3 check-box contact-select "
-                                                name="checks[]" form="deleteMultipleForm" type="checkbox"
+                                                name="checks[]"  form="deleteMultipleForm" type="checkbox"
                                                 value="{{$contact->id}}" id="flexCheckDefault{{$contact->id}}"
 
                                             >
@@ -100,6 +120,12 @@
                                                 @method('delete')
                                                 <button class="btn btn-sm btn-dark">Del</button>
                                             </form>
+
+                                            <form action="{{route('contact.clone',$contact->id)}}" method="post">
+                                                @csrf
+                                                <button class="btn btn-sm btn-dark">clone</button>
+                                            </form>
+
                                         </div>
                                     </td>
                                 </tr>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exports\TestExport;
 use App\Http\Requests\StoreContactRequest;
 use App\Http\Requests\UpdateContactRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Imports\TestImport;
 use App\Models\Contact;
@@ -191,8 +192,6 @@ class ContactController extends Controller
 
     public function multipleDelete(Request $request){
 
-
-
         $contacts= Contact::where('user_id',Auth::id())
                     ->withTrashed()
                     ->whereIn('id',$request->checks)
@@ -221,5 +220,27 @@ class ContactController extends Controller
          Excel::import(new TestImport, $request->file('contacts'));
 
         return redirect()->route('contact.index')->with('success');
+    }
+
+    public function clone($id){
+
+        $contact= Contact::find($id);
+       $newContact= $contact->replicate();
+      $newContact->created_at = Carbon::now();
+        $newContact->save();
+
+        return redirect()->route('contact.index');
+    }
+
+    public function multipleClone(Request $request){
+
+       $contacts= Contact::whereIn('id',$request->checks)->get();
+       foreach ($contacts as $contact){
+           $newContact= $contact->replicate();
+           $newContact->created_at = Carbon::now();
+           $newContact->save();
+       }
+
+       return redirect()->route('contact.index');
     }
 }
