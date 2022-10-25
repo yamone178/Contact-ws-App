@@ -109,7 +109,7 @@ class ContactController extends Controller
     public function edit(Contact $contact)
     {
 
-
+        Gate::authorize('update',$contact);
         return view('contact.edit', compact('contact'));
 
     }
@@ -124,6 +124,7 @@ class ContactController extends Controller
     public function update(UpdateContactRequest $request, Contact $contact)
     {
 
+        Gate::authorize('update',$contact);
         $contact->firstName= $request->firstName;
         $contact->lastName= $request->lastName;
         $contact->email= $request->email;
@@ -153,8 +154,6 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-
-
 
         $contact= Contact::where('user_id',Auth::id())
                     ->withTrashed()->findOrFail($id);

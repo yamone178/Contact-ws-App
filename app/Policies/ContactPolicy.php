@@ -67,7 +67,7 @@ class ContactPolicy
      */
     public function delete(User $user, Contact $contact)
     {
-        //
+        return $user->id === $contact->user_id;
     }
 
     /**
@@ -79,7 +79,7 @@ class ContactPolicy
      */
     public function restore(User $user, Contact $contact)
     {
-        //
+        return $user->id === $contact->user_id;
     }
 
     /**
@@ -91,6 +91,6 @@ class ContactPolicy
      */
     public function forceDelete(User $user, Contact $contact)
     {
-        //
+        return $user->id === $contact->user_id;
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Resources\ContactResource;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ContactApiController extends Controller
 {
@@ -70,6 +71,7 @@ class ContactApiController extends Controller
     public function show($id)
     {
         $contact= Contact::find($id);
+        Gate::authorize('view',$contact);
         if (is_null($contact)){
             return  response()->json([
                 'message'=> 'Contact not found',
@@ -103,6 +105,8 @@ class ContactApiController extends Controller
 
 
         $contact = Contact::find($id);
+
+        Gate::authorize('update',$contact);
 
         if (is_null($contact)){
             return  response()->json([
@@ -158,6 +162,7 @@ class ContactApiController extends Controller
     public function destroy($id)
     {
         $contact= Contact::find($id);
+        Gate::authorize('destroy',$contact);
         if (is_null($contact)){
             return  response()->json([
                 'message'=> 'Contact not found',
