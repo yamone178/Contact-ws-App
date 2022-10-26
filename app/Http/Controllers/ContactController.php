@@ -65,18 +65,18 @@ class ContactController extends Controller
         $contact->user_id = Auth::user()->id;
 
 
-//       if ($request->hasFile('image')){
-//
-//            $newName= uniqid().'contact_img.'.$request->file('image')->extension();
-//            $request->file('image')->storeAs('public/images', $newName);
-//
-//           $contact->image = $newName;
-//       }
+       if ($request->file('image') != null){
 
-        if ($request->hasFile('image')){
-            $newName= $request->file('image')->store('public/image');
-            $contact->image= $newName;
-        }
+            $newName= uniqid().'contact_img.'.$request->file('image')->extension();
+            $request->file('image')->storeAs('public/image', $newName);
+
+           $contact->image = $newName;
+       }
+
+//        if ($request->hasFile('image')){
+//            $newName= $request->file('image')->store('public/image');
+//            $contact->image= $newName;
+//        }
 
 
 
@@ -135,15 +135,22 @@ class ContactController extends Controller
         $contact->note= $request->note;
         $contact->user_id = auth()->user()->id;
 
-
         if ($request->hasFile('image')){
-            $newName= $request->file('image')->store('public/image');
-            $contact->image= $newName;
+
+            $newName= uniqid().'contact_img.'.$request->file('image')->extension();
+            $request->file('image')->storeAs('public/image', $newName);
+
+            $contact->image = $newName;
         }
+
+//        if ($request->hasFile('image')){
+//            $newName= $request->file('image')->store('public/image');
+//            $contact->image= $newName;
+//        }
 
         $contact->update();
 
-        return  redirect()->route('contact.index');
+        return  redirect()->route('contact.index')->with('status','contact is updated');
 
     }
 
@@ -163,14 +170,14 @@ class ContactController extends Controller
         //forceDelete
         if ($contact->trashed()){
                 if ($contact->image != null){
-                    Storage::delete($contact->image);
+                    Storage::delete('/public/image/'.$contact->image);
                 }
             $contact->forceDelete();
         }
 
         //softDelete
         $contact->delete();
-        return redirect()->back();
+        return redirect()->back()->with('status','Contact are deleted');
     }
 
     public function trash(){
@@ -184,10 +191,10 @@ class ContactController extends Controller
     public function restore($id){
 
         $contact= Contact::where('user_id',Auth::id())
-                    ->withTrashed()->findOrFail($id);
+                    ->onlyTrashed()->findOrFail($id);
         $contact->restore();
 
-        return redirect()->back();
+        return redirect()->back()->with('status','Contact is restored');
     }
 
     public function multipleDelete(Request $request){
@@ -197,6 +204,8 @@ class ContactController extends Controller
                     ->whereIn('id',$request->checks)
                     ->get();
 
+
+        //force Delete
            foreach ($contacts as $contact){
                if ($contact->trashed()){
                    if ($contact->image != null){
@@ -206,8 +215,9 @@ class ContactController extends Controller
                }
            }
 
+           //softDelete
         Contact::destroy($request->checks);
-        return  redirect()->back();
+        return  redirect()->route('contact.index')->with('status','contacts are deleted');
     }
 
 
@@ -241,6 +251,6 @@ class ContactController extends Controller
            $newContact->save();
        }
 
-       return redirect()->route('contact.index');
+       return redirect()->route('contact.index')->with('status','Copies done');
     }
 }

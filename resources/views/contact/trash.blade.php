@@ -8,7 +8,10 @@
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
-                        <form class="mb-3" action="{{route('contact.multipleDelete')}}" method="post" id="deleteMultipleForm">
+
+                        {{--                     multiple Select Form for Delete and Duplicate --}}
+
+                        <form class="mb-3 d-flex align-items-center multipleForm" action="{{route('contact.multipleDelete')}}" method="post" id="deleteMultipleForm">
                             @csrf
 
                             <input
@@ -25,6 +28,9 @@
                                 Delete
                             </button>
                         </form>
+                        {{--       End  multiple Select Form for Delete and Duplicate --}}
+
+
 
                         <table class="table table-hover table-borderless table-hover align-middle ">
                             <thead class="table-light">
@@ -52,20 +58,22 @@
                             </tr>
 
                             @forelse($trashItems as $trashItem)
-                                <tr class="table-row">
+                                <tr class="" >
                                     <td>
-                                        <div class=" d-flex   align-items-center">
+                                        <div class=" d-flex  align-items-center">
 
                                             <input
                                                 class="form-check-input  me-3 check-box contact-select "
-                                                name="checks[]" form="deleteMultipleForm" type="checkbox"
+                                                name="checks[]"  form="deleteMultipleForm" type="checkbox"
                                                 value="{{$trashItem->id}}" id="flexCheckDefault{{$trashItem->id}}"
+
                                             >
 
 
-                                            <label for="flexCheckDefault{{$trashItem->id}}" class="">
+                                            <label  for="flexCheckDefault{{$trashItem->id}}" class="row-label">
                                                 @if($trashItem->image != null)
-                                                    <img src="{{asset(Storage::url($trashItem->image))}}" width="40px" height="40px" class=" contact-img{{$trashItem->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+{{--                                                    <img src="{{asset(Storage::url($trashItem->image))}}" width="40px" height="40px" class=" contact-img{{$trashItem->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">--}}
+                                                    <img src="{{asset('storage/image/'.$trashItem->image)}}" width="40px" height="40px" class=" contact-img{{$trashItem->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
                                                 @else
 
@@ -90,9 +98,9 @@
                                     <td>
 
                                         <div class="d-flex">
-                                            <form  class="me-1" action="{{route('contact.restore',$trashItem->id)}}" method="post">
+                                            <form action="{{route('contact.restore',$trashItem->id)}}" method="post">
                                                 @csrf
-                                                <button class="btn btn-sm btn-dark">Restore</button>
+                                                <button class="btn btn-sm btn-dark me-3">Restore</button>
                                             </form>
 
                                             <form action="{{route('contact.destroy',$trashItem->id)}}" method="post">
@@ -100,6 +108,7 @@
                                                 @method('delete')
                                                 <button class="btn btn-sm btn-dark">Del</button>
                                             </form>
+
                                         </div>
                                     </td>
                                 </tr>

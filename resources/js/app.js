@@ -9,16 +9,31 @@ window.forward=(route)=>{
     location.href = route
 }
 
-// let multipleForm = document.querySelector('.multipleForm')
+let multiSelectForm = document.querySelector('.multipleForm')
+let multipleDelBtn= document.querySelector('.multipleDelBtn')
+let clone =document.querySelector('.clone')
 
-let clone= document.querySelector('.clone')
-clone.addEventListener('click',function (e){
 
-    e.preventDefault()
-    multipleForm.setAttribute('action',"http://127.0.0.1:8000/multiple-clone")
-    // multipleForm.submit();
-    // multipleForm.getAttribute('action', "{{route('contact.multiple-clone')}}")
-});
+
+if (multipleDelBtn){
+    multipleDelBtn.addEventListener('click',function (e){
+        e.preventDefault()
+        let form= e.target.parentElement
+        window.confirmAlert('Yes, delete it',form)
+    })
+}
+
+if (clone){
+    clone.addEventListener('click',function (e){
+        e.preventDefault()
+
+    })
+}
+
+window.changeRoute = (route) =>{
+    multiSelectForm.action = route
+    window.confirmAlert('copy it', multiSelectForm)
+}
 
 
 

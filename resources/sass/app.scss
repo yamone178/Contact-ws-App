@@ -147,10 +147,6 @@ body{
     display: block;
 }
 
-.table-row:hover .noImg{
-    transition: 0.5s linear;
-    display: none;
-}
 
 .table-row:hover{
     cursor: pointer;
@@ -160,6 +156,15 @@ body{
 .contact-select:checked{
     display: block;
 }
+
+.image-container{
+    display: block;
+}
+
+.contact-select:checked + .row-label  .imgArea{
+    display: none !important;
+}
+
 
 
 .dropdown-toggle::after{

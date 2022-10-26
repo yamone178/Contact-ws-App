@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TestExport;
 use App\Http\Resources\ContactResource;
+use App\Imports\TestImport;
 use App\Models\Contact;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ContactApiController extends Controller
 {
@@ -17,8 +22,14 @@ class ContactApiController extends Controller
      */
     public function index()
     {
-        $contacts= Contact::where('user_id',Auth::id())->latest('id')->get();
-        return ContactResource::collection($contacts);
+        $contacts= Contact::where('user_id',Auth::id())
+                ->latest('id')->get();
+//              ->paginate(6)->withQueryString();
+        return response()->json([
+            'success'=> true,
+            'status' => 200,
+            'contacts' => ContactResource::collection($contacts)
+        ]);
 
     }
 
@@ -46,9 +57,17 @@ class ContactApiController extends Controller
         $contact->note= $request->note;
         $contact->user_id= Auth::id();
 
+//        if ($request->hasFile('image')){
+//            $newPath= $request->file('image')->store('public/image');
+//            $contact->image= $newPath;
+//        }
+
         if ($request->hasFile('image')){
-            $newPath= $request->file('image')->store('public/image/');
-            $contact->image= $newPath;
+
+            $newName= uniqid().'contact_img.'.$request->file('image')->extension();
+            $request->file('image')->storeAs('public/image', $newName);
+
+            $contact->image = $newName;
         }
 
 
@@ -134,9 +153,17 @@ class ContactApiController extends Controller
         if ($request->has('birthday')){
             $contact->birthday= $request->birthday;
         }
+//        if ($request->hasFile('image')){
+//            $newPath= $request->file('image')->store($request->image);
+//            $contact->image= $newPath;
+//        }
+
         if ($request->hasFile('image')){
-            $newPath= $request->file('image')->store('public/image/');
-            $contact->image= $newPath;
+
+            $newName= uniqid().'contact_img.'.$request->file('image')->extension();
+            $request->file('image')->storeAs('public/image', $newName);
+
+            $contact->image = $newName;
         }
 
         if ($request->has('note')){
@@ -149,7 +176,7 @@ class ContactApiController extends Controller
             'message'=> 'Contact is updated',
             'status'=> 200,
             'success'=> true,
-            'contact'=> $contact
+            'contact'=> new ContactResource($contact)
         ]);
     }
 
@@ -161,14 +188,15 @@ class ContactApiController extends Controller
      */
     public function destroy($id)
     {
-        $contact= Contact::find($id);
-        Gate::authorize('destroy',$contact);
+        $contact= Contact::where('user_id',Auth::id())
+                ->withTrashed()->find($id);
         if (is_null($contact)){
             return  response()->json([
                 'message'=> 'Contact not found',
                 'status'=> 404
             ]);
         }
+
         $contact->delete();
 
 
@@ -179,4 +207,120 @@ class ContactApiController extends Controller
 
         ]);
     }
+
+    public function trash(){
+
+        $trashItems=  Contact::where('user_id',Auth::id())
+            ->onlyTrashed()->latest('id')
+            ->paginate(6)->withQueryString();
+       return response()->json([
+           'status' => 200,
+           'contacts' => ContactResource::collection($trashItems)
+       ]);
+    }
+
+    public function restore($id){
+
+        $contact= Contact::where('user_id',Auth::id())
+            ->onlyTrashed()->findOrFail($id);
+
+        if (is_null($contact)){
+            return  response()->json([
+                'message'=> 'Contact not found',
+                'status'=> 404
+            ]);
+        }
+        $contact->restore();
+
+        return  response()->json([
+            'message'=> 'Contact is restored',
+            'status'=>200,
+            'success'=> true,
+
+
+        ]);
+    }
+
+    public function clone($id){
+
+        $contact= Contact::where('user_id',Auth::id())->find($id);
+        if (is_null($contact)){
+            return  response()->json([
+                'message'=> 'Contact not found',
+                'status'=> 404
+            ]);
+        }
+        $newContact= $contact->replicate();
+        $newContact->created_at = Carbon::now();
+        $newContact->save();
+
+        return  response()->json([
+            'message'=> 'Contact is cloned',
+            'status'=>200,
+            'success'=> true,
+
+
+        ]);
+
+    }
+
+    public function multipleDelete(Request $request){
+
+        $contacts= Contact::where('user_id',Auth::id())
+            ->withTrashed()
+            ->whereIn('id',$request)
+            ->get();
+
+
+        //force Delete
+        foreach ($contacts as $contact){
+            if ($contact->trashed()){
+                if ($contact->image != null){
+                    Storage::delete($contact->image);
+                }
+                $contact->forceDelete();
+            }
+
+            $contact->delete();
+        }
+
+        //softDelete
+//        Contact::destroy($request);
+
+        return  response()->json([
+            'message'=> count($contacts)." Contacts are cloned",
+            'status'=>200,
+            'success'=> true,
+
+        ]);
+
+    }
+
+    public function multipleClone(Request $request){
+
+        $contacts= Contact::where('user_id',Auth::id())
+                    ->whereIn('id',$request)->get();
+        foreach ($contacts as $contact){
+            $newContact= $contact->replicate();
+            $newContact->created_at = Carbon::now();
+            $newContact->save();
+        }
+
+        return  response()->json([
+            'message'=> count($contacts)." Contacts are cloned",
+            'status'=>200,
+            'success'=> true,
+
+        ]);
+    }
+
+    public function export(){
+        return Excel::download(new TestExport, 'contact.csv');
+    }
+
+    public function import(Request $request){
+       return Excel::import(new TestImport, $request->file('contacts'));
+
+    }
+
 }

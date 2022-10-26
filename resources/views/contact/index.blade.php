@@ -9,13 +9,8 @@
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
 
-{{--                        <form action="{{route('contact.multiple-clone')}}" id="cloneMultiple" method="post">--}}
+{{--                     multiple Select Form for Delete and Duplicate --}}
 
-{{--                            @csrf--}}
-{{--                            <button class="btn btn-primary">Clone</button>--}}
-
-{{--                        </form>--}}
-''
                         <form class="mb-3 d-flex align-items-center multipleForm" action="{{route('contact.multipleDelete')}}" method="post" id="deleteMultipleForm">
                             @csrf
 
@@ -35,8 +30,9 @@
 
                             <button
 
-                                onclick=""
-                                class="btn btn-danger multipleDelBtn clone"
+                                disabled="true"
+                                onclick= changeRoute("{{route('contact.multiple-clone')}}")
+                                class="btn btn-primary ms-3 multipleDelBtn clone"
                                 form="deleteMultipleForm"
                             >
                                 Clone
@@ -44,6 +40,8 @@
 
 
                         </form>
+{{--       End  multiple Select Form for Delete and Duplicate --}}
+
 
 
                         <table class="table table-hover table-borderless table-hover align-middle ">
@@ -86,13 +84,14 @@
 
                                             <label  for="flexCheckDefault{{$contact->id}}" class="row-label">
                                                 @if($contact->image != null)
-                                                    <img src="{{asset(Storage::url($contact->image))}}" width="40px" height="40px" class=" contact-img{{$contact->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+{{--                                                    <img src="{{asset(Storage::url($contact->image))}}" width="40px" height="40px" class=" contact-img{{$contact->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">--}}
+                                                    <img src="{{asset('storage/image/'.$contact->image)}}" width="40px" height="40px" class=" contact-img{{$contact->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
                                                 @else
 
 
 
-                                                    <div class="d-inline-block me-2">
+                                                    <div class=" me-2 d-inline-block image-container">
                                                         <span class="noImg imgArea" style="background: {{\App\Models\Contact::randBackgroundColor()}}"> {{ucfirst(\App\Models\Contact::getFirstLetter($contact->firstName))}}</span>
 
                                                     </div>
@@ -115,10 +114,12 @@
                                                Edit
                                             </a>
 
+                                            <button class="btn btn-sm btn-dark">send</button>
+
                                             <form action="{{route('contact.destroy',$contact->id)}}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                <button class="btn btn-sm btn-dark">Del</button>
+                                                <button class="btn btn-sm btn-dark me-2">Del</button>
                                             </form>
 
                                             <form action="{{route('contact.clone',$contact->id)}}" method="post">
