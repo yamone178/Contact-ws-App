@@ -107,14 +107,41 @@
                                     <td onclick=window.forward("{{route('contact.show',$contact->id)}}")>{{$contact->email}}</td>
                                     <td onclick=window.forward("{{route('contact.show',$contact->id)}}")>{{$contact->phone}}</td>
                                     <td onclick=window.forward("{{route('contact.show',$contact->id)}}")>{{$contact->jobTitle}}</td>
-                                    <td onclick=window.forward("{{route('contact.show',$contact->id)}}")>
+                                    <td>
 
                                         <div class="d-flex">
                                             <a   class="me-1 btn btn-sm btn-dark" href="{{route('contact.edit',$contact->id)}}">
                                                Edit
                                             </a>
 
-                                            <button class="btn btn-sm btn-dark">send</button>
+                                            <button class="btn btn-sm btn-dark me-1" data-bs-toggle="modal" data-bs-target="#sendModal">send</button>
+
+                                            <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="sendModalLabel">Modal title</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <form action="{{route('contactStore.store')}}" method="post" id="storeContact" >
+
+                                                            @csrf
+                                                            <div class="modal-body">
+
+                                                                <div class="mb-3">
+                                                                    <label for="" class="form-label">email</label>
+                                                                    <input type="email" name="email" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+
+                                                                <button class="btn btn-primary" form="storeContact">Send</button>
+                                                            </div>
+                                                        </form>
+
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <form action="{{route('contact.destroy',$contact->id)}}" method="post">
                                                 @csrf
@@ -156,6 +183,12 @@
 
 
     </div>
+
+
+
+
+
+
 
 
 

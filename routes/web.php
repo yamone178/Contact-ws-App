@@ -28,4 +28,4 @@ Route::post('/clone/{id}',[\App\Http\Controllers\ContactController::class,'clone
 Route::post('/multiple-clone',[\App\Http\Controllers\ContactController::class,'multipleClone'])->name('contact.multiple-clone');
 Route::post('/import',[\App\Http\Controllers\ContactController::class,'import'])->name('contact.import');
 Route::get('/export',[\App\Http\Controllers\ContactController::class,'export'])->name('contact.export');
-
+Route::resource('contactStore',\App\Http\Controllers\StoreController::class);
