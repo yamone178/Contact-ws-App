@@ -9,5 +9,5 @@ class StoreContact extends Model
 {
     use HasFactory;
 
-
+    protected $fillable = ['isAccepted'];
 }

@@ -30,4 +30,5 @@ Route::post('/import',[\App\Http\Controllers\ContactController::class,'import'])
 Route::get('/export',[\App\Http\Controllers\ContactController::class,'export'])->name('contact.export');
 Route::resource('contactStore',\App\Http\Controllers\StoreController::class);
 Route::get('/noti',[\App\Http\Controllers\ContactController::class,'noti'])->name('contact.noti');
-Route::get('/addContact/{id}', [\App\Http\Controllers\StoreController::class,'addContact'])->name('contactStore.addContact');
+Route::post('/addContact/{id}', [\App\Http\Controllers\StoreController::class,'addContact'])->name('contactStore.addContact');
+Route::post('/contactStore/{id}',[\App\Http\Controllers\StoreController::class,'addToContactStore'])->name('contact.addToStore');

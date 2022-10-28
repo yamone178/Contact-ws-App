@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateStoreContactRequest;
 use App\Models\Contact;
 use App\Models\StoreContact;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use function Termwind\renderUsing;
 
@@ -45,9 +46,7 @@ class StoreController extends Controller
        $storeContact= new StoreContact();
        $storeContact->sender = $contact->user_id;
        $storeContact->shared_Contact= $contact;
-        $user= User::where('email', '=',$request->email)->first();
-
-        $storeContact->receiver= $user->id;
+        $storeContact->receiver= User::where('email',$request->email)->first()->id;
 
         $storeContact->save();
        return  redirect()->back();
@@ -100,14 +99,14 @@ class StoreController extends Controller
         //
     }
 
-    public function addContact($id){
-
+    public function addContact(Request $request,$id){
 
        $storeContact = Contact::findOrFail($id);
-
        $storeContact->delete();
 
-
+        //isAccepted
+        StoreContact::where('id',$request->contactStore_id)
+                            ->update(['isAccepted' => 1]);
 
        $contact = new Contact();
        $contact->create([
@@ -124,4 +123,6 @@ class StoreController extends Controller
 
        return redirect()->back();
     }
+
+
 }

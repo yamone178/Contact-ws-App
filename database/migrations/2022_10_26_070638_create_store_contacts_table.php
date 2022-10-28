@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('sender');
             $table->json('shared_Contact');
             $table->string('receiver');
-            $table->enum('isAccepted',[0,1])->default(0);
+            $table->boolean('isAccepted')->default(0);
             $table->timestamps();
         });
     }

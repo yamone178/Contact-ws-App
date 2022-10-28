@@ -12,11 +12,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
             <div class="toast-body">
-                <p class="">Contact name : {{ json_decode($noti->shared_Contact, true)['firstName'] }} {{ json_decode($noti->shared_Contact, true)['lastName'] }}</p>
+                <div class="d-flex justify-content-between justify-content-center">
+                    <p class="mb-0 badge bg-black">Contact name : {{ json_decode($noti->shared_Contact, true)['firstName'] }} {{ json_decode($noti->shared_Contact, true)['lastName'] }}  </p>
+                    <p class="badge bg-dark mb-0">from {{\App\Models\User::find($noti->receiver)->name}}</p>
+                </div>
                 <hr>
                 <div class="">
-                    <form action="{{route('contactStore.addContact', json_decode($noti->shared_Contact, true)['id'] )}}" method="get">
-                        <button class="btn btn-dark">Accept</button>
+
+                    <form action="{{route('contactStore.addContact', json_decode($noti->shared_Contact, true)['id'] )}}" method="post" id="accept{{$noti->id}}">
+                        @csrf
+                        <input type="text" name="contactStore_id" value="{{$noti->id}}" form="accept{{$noti->id}}" hidden >
+                        <button class="btn btn-dark" form="accept{{$noti->id}}">Accept</button>
                     </form>
                 </div>
             </div>
