@@ -9,4 +9,5 @@ class StoreContact extends Model
 {
     use HasFactory;
 
+
 }

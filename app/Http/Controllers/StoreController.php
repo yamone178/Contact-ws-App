@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateStoreContactRequest;
 use App\Models\Contact;
 use App\Models\StoreContact;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use function Termwind\renderUsing;
 
 class StoreController extends Controller
 {
@@ -38,6 +40,17 @@ class StoreController extends Controller
      */
     public function store(StoreStoreContactRequest $request)
     {
+
+       $contact= Contact::find($request->contact_id);
+       $storeContact= new StoreContact();
+       $storeContact->sender = $contact->user_id;
+       $storeContact->shared_Contact= $contact;
+        $user= User::where('email', '=',$request->email)->first();
+
+        $storeContact->receiver= $user->id;
+
+        $storeContact->save();
+       return  redirect()->back();
 
 
     }
@@ -85,5 +98,30 @@ class StoreController extends Controller
     public function destroy(StoreContact $storeContact)
     {
         //
+    }
+
+    public function addContact($id){
+
+
+       $storeContact = Contact::findOrFail($id);
+
+       $storeContact->delete();
+
+
+
+       $contact = new Contact();
+       $contact->create([
+           'firstName' => $storeContact->firstName,
+           'lastName' => $storeContact->lastName,
+           'jobTitle' => $storeContact->jobTitle,
+           'email' => $storeContact->email,
+           'phone' => $storeContact->phone,
+           'birthday' => $storeContact->birthday,
+           'user_id' => Auth::user()->id,
+
+       ]);
+
+
+       return redirect()->back();
     }
 }
