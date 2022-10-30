@@ -119,6 +119,7 @@
 
     </script>
 
+@stack('script')
 
 
 </body>

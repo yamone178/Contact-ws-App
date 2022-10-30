@@ -11,7 +11,7 @@ class Contact extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable=['id','firstName','lastName','phone','email','jobTitle','user_id'];
+    protected $fillable=['id','firstName','lastName','phone','image','email','jobTitle','user_id'];
 
     public static function getFirstLetter($word){
         $words = explode(" ", $word);

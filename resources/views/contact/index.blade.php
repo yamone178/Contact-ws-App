@@ -31,12 +31,59 @@
                             <button
 
                                 disabled="true"
-                                onclick= changeRoute("{{route('contact.multiple-clone')}}")
+                                onclick= changeRoute("{{route('contactStore.store')}}")
                                 class="btn btn-primary ms-3 multipleDelBtn clone"
                                 form="deleteMultipleForm"
                             >
                                 Clone
                             </button>
+
+                            <button
+
+                                onclick= changeRoute("{{route('contactStore.store')}}")
+                                class="btn btn-primary ms-3 multipleDelBtn "
+                                form="deleteMultipleForm"
+                            >
+                               Send
+                            </button>
+
+                            <button class="btn btn-sm btn-dark me-1" data-bs-toggle="modal" data-bs-target="#sendModal{{$contact->id}}">send</button>
+
+
+                            <div class="modal fade" id="sendModal{{$contact->id}}" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="sendModalLabel">Modal title</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <form action="{{route('contactStore.store')}}" method="post" id="storeContact{{$contact->id}}" >
+
+                                                @csrf
+
+                                                <input type="text" name="contact_id" value="{{$contact->id}}" form="storeContact{{$contact->id}}" hidden>
+
+                                                <div class="mb-3">
+
+                                                    <label for="senderEmail" class="form-label" form="storeContact{{$contact->id}}">email</label>
+                                                    <input type="email" name="email" class="form-control" form="storeContact{{$contact->id}}">
+
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="modal-footer">
+
+                                            <button  class="btn btn-primary" form="storeContact{{$contact->id}}">Send</button>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
 
 
                         </form>
@@ -136,15 +183,15 @@
 
                                                                         <label for="senderEmail" class="form-label" form="storeContact{{$contact->id}}">email</label>
                                                                         <input type="email" name="email" class="form-control" form="storeContact{{$contact->id}}">
+
                                                                     </div>
                                                                 </form>
                                                             </div>
 
-
-
                                                         <div class="modal-footer">
 
-                                                            <button class="btn btn-primary" form="storeContact{{$contact->id}}">Send</button>
+                                                            <button  class="btn btn-primary" form="storeContact{{$contact->id}}">Send</button>
+
                                                         </div>
 
                                                     </div>
@@ -167,10 +214,14 @@
 
                                         </div>
                                     </td>
+
+
+
                                 </tr>
                             @empty
                             </tbody>
                         </table>
+
 
 
 

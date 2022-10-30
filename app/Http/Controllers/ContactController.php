@@ -255,9 +255,5 @@ class ContactController extends Controller
        return redirect()->route('contact.index')->with('status','Copies done');
     }
 
-    public function noti(){
 
-        $notis = StoreContact::where('receiver', Auth::id())->get();
-        return view('contact.noti', compact('notis'));
-    }
 }

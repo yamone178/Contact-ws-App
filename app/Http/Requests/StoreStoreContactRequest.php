@@ -24,7 +24,7 @@ class StoreStoreContactRequest extends FormRequest
     public function rules()
     {
         return [
-
+            'email'=> 'required|exists:App\Models\User,email'
         ];
     }
 }

@@ -9,6 +9,7 @@ use App\Models\StoreContact;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use function Termwind\renderUsing;
 
 class StoreController extends Controller
@@ -99,29 +100,49 @@ class StoreController extends Controller
         //
     }
 
-    public function addContact(Request $request,$id){
+    public function noti(){
 
-       $storeContact = Contact::findOrFail($id);
-       $storeContact->delete();
+        $notis = StoreContact::where('receiver', Auth::id())->get();
+        return view('contact.noti', compact('notis'));
+    }
+
+
+    public function acceptContact(Request $request,$id){
+
+        //find from contact
+       $contact = Contact::findOrFail($id);
 
         //isAccepted
         StoreContact::where('id',$request->contactStore_id)
                             ->update(['isAccepted' => 1]);
 
-       $contact = new Contact();
-       $contact->create([
-           'firstName' => $storeContact->firstName,
-           'lastName' => $storeContact->lastName,
-           'jobTitle' => $storeContact->jobTitle,
-           'email' => $storeContact->email,
-           'phone' => $storeContact->phone,
-           'birthday' => $storeContact->birthday,
+       $newContact = new Contact();
+       $newContact->create([
+           'firstName' => $contact->firstName,
+           'lastName' => $contact->lastName,
+           'jobTitle' => $contact->jobTitle,
+           'email' => $contact->email,
+           'phone' => $contact->phone,
+           'birthday' => $contact->birthday,
+           'image' =>  $contact->image,
            'user_id' => Auth::user()->id,
 
        ]);
 
 
+        $contact->delete();
+
        return redirect()->back();
+    }
+
+
+    public function declineContact (Request $request,$id){
+
+        $storeContact = Contact::findOrFail($id);
+
+        //isAccepted
+        StoreContact::where('id',$request->contactStore_id)
+            ->update(['isAccepted' => 0]);
     }
 
 
