@@ -55,6 +55,22 @@ class StoreController extends Controller
 
     }
 
+    public function multipleStoreContact( Request $request){
+        $contacts= Contact::whereIn('id',$request->checks)->get();
+
+        foreach ($contacts as $contact){
+            $contact= Contact::find($contact->id);
+            $storeContact= new StoreContact();
+            $storeContact->sender = Auth::id();
+            $storeContact->shared_Contact= $contact;
+            $storeContact->receiver= User::where('email',$request->email)->first()->id;
+
+            $storeContact->save();
+        }
+
+        return redirect()->back();
+    }
+
     /**
      * Display the specified resource.
      *

@@ -29,28 +29,27 @@
                             </button>
 
                             <button
-
+                                onclick= changeRoute("{{route('contact.multiple-clone')}}")
                                 disabled="true"
-                                onclick= changeRoute("{{route('contactStore.store')}}")
-                                class="btn btn-primary ms-3 multipleDelBtn clone"
+                                class="btn btn-primary ms-3 multipleDelBtn clone formBtn"
                                 form="deleteMultipleForm"
                             >
                                 Clone
                             </button>
 
                             <button
-
-                                onclick= changeRoute("{{route('contactStore.store')}}")
-                                class="btn btn-primary ms-3 multipleDelBtn "
+                                class="btn btn-primary ms-3 openContactModal"
                                 form="deleteMultipleForm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#sendModal"
                             >
                                Send
                             </button>
 
-                            <button class="btn btn-sm btn-dark me-1" data-bs-toggle="modal" data-bs-target="#sendModal{{$contact->id}}">send</button>
+{{--                            <button class="btn btn-sm btn-dark me-1" data-bs-toggle="modal" data-bs-target="#sendModal{{$contact->id}}">send</button>--}}
 
 
-                            <div class="modal fade" id="sendModal{{$contact->id}}" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="sendModal" tabindex="-1" aria-labelledby="sendModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -59,24 +58,22 @@
                                         </div>
 
                                         <div class="modal-body">
-                                            <form action="{{route('contactStore.store')}}" method="post" id="storeContact{{$contact->id}}" >
-
-                                                @csrf
-
-                                                <input type="text" name="contact_id" value="{{$contact->id}}" form="storeContact{{$contact->id}}" hidden>
 
                                                 <div class="mb-3">
 
-                                                    <label for="senderEmail" class="form-label" form="storeContact{{$contact->id}}">email</label>
-                                                    <input type="email" name="email" class="form-control" form="storeContact{{$contact->id}}">
+                                                    <label for="senderEmail" class="form-label">email</label>
+                                                    <input type="email" name="email" class="form-control" form="deleteMultipleForm">
 
                                                 </div>
-                                            </form>
+
                                         </div>
 
                                         <div class="modal-footer">
 
-                                            <button  class="btn btn-primary" form="storeContact{{$contact->id}}">Send</button>
+                                            <button
+                                                onclick= changeRoute("{{route('contact.multipleStoreContact')}}")
+                                                class="btn btn-primary formBtn"
+                                                form="deleteMultipleForm">Send</button>
 
                                         </div>
 
@@ -246,20 +243,17 @@
 
     </div>
 
-
-    @foreach($contacts as $contact)
-
-
-
-
-    @endforeach
-
-
-
-
-
-
-
-
-
 @endsection
+
+@push('script')
+
+    <script>
+
+        let sendModal= document.querySelector('.openContactModal')
+        sendModal.addEventListener('click', function (e){
+            e.preventDefault()
+        })
+
+    </script>
+
+@endpush

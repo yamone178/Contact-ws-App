@@ -11,7 +11,7 @@ window.forward=(route)=>{
 
 let multiSelectForm = document.querySelector('.multipleForm')
 let multipleDelBtn= document.querySelector('.multipleDelBtn')
-let clone =document.querySelector('.clone')
+let formBtns =document.querySelectorAll('.formBtn')
 
 
 
@@ -23,16 +23,20 @@ if (multipleDelBtn){
     })
 }
 
-if (clone){
-    clone.addEventListener('click',function (e){
-        e.preventDefault()
+if (formBtns){
+    formBtns.forEach(formBtn => {
 
+        formBtn.addEventListener('click',function (e){
+            e.preventDefault()
+
+        })
     })
+
 }
 
-window.changeRoute = (route) =>{
+window.changeRoute = (route, message = 'Are you sure') =>{
     multiSelectForm.action = route
-    window.confirmAlert('copy it', multiSelectForm)
+    window.confirmAlert(message, multiSelectForm)
 }
 
 
