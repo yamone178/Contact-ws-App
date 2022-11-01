@@ -33,6 +33,6 @@ Route::get('/export',[ContactController::class,'export'])->name('contact.export'
 Route::resource('contactStore',StoreController::class);
 Route::get('/noti',[StoreController::class,'noti'])->name('contact.noti');
 Route::post('/accept-contact/{id}', [StoreController::class,'acceptContact'])->name('contact.acceptContact');
-Route::post('/contactStore/{id}',[StoreController::class,'addToContactStore'])->name('contact.addToStore');
+//Route::post('/contactStore/{id}',[StoreController::class,'addToContactStore'])->name('contact.addToStore');
 Route::post('/decline-contact/{id}',[StoreController::class,'declineContact'])->name('contact.declineContact');
 Route::post('/multiple-store-contact',[StoreController::class,'multipleStoreContact'])->name('contact.multipleStoreContact');

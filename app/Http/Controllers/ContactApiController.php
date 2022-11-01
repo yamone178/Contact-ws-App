@@ -23,8 +23,9 @@ class ContactApiController extends Controller
     public function index()
     {
         $contacts= Contact::where('user_id',Auth::id())
-                ->latest('id')->get();
-//              ->paginate(6)->withQueryString();
+                ->latest('id')
+                ->paginate(6)
+                ->withQueryString();
         return response()->json([
             'success'=> true,
             'status' => 200,
@@ -44,7 +45,8 @@ class ContactApiController extends Controller
         $request->validate([
             'firstName'=> 'required',
             'lastName'=> 'required',
-            'phone'=> 'required',
+            'phone'=> 'required|numeric',
+            'image'=> 'nullable|file|mimes:jpeg,png|max:512'
 
         ]);
         $contact= new Contact();
@@ -64,7 +66,7 @@ class ContactApiController extends Controller
 
         if ($request->hasFile('image')){
 
-            $newName= uniqid().'contact_img.'.$request->file('image')->extension();
+            $newName= uniqid().'contactImg.'.$request->file('image')->extension();
             $request->file('image')->storeAs('public/image', $newName);
 
             $contact->image = $newName;
@@ -76,7 +78,7 @@ class ContactApiController extends Controller
         return response()->json([
             'message'=>'Contact created',
             'success'=> 'true',
-            'status'=> 202,
+            'status'=> 200,
             'contact'=> new ContactResource($contact)
         ]);
     }
@@ -89,8 +91,7 @@ class ContactApiController extends Controller
      */
     public function show($id)
     {
-        $contact= Contact::find($id);
-        Gate::authorize('view',$contact);
+        $contact= Contact::where('user_id',Auth::id())->find($id);
         if (is_null($contact)){
             return  response()->json([
                 'message'=> 'Contact not found',
@@ -123,9 +124,8 @@ class ContactApiController extends Controller
         ]);
 
 
-        $contact = Contact::find($id);
+        $contact = Contact::where('user_id',Auth::id())->find($id);
 
-        Gate::authorize('update',$contact);
 
         if (is_null($contact)){
             return  response()->json([
@@ -288,7 +288,7 @@ class ContactApiController extends Controller
 //        Contact::destroy($request);
 
         return  response()->json([
-            'message'=> count($contacts)." Contacts are cloned",
+            'message'=> count($contacts)." Contacts are deleted",
             'status'=>200,
             'success'=> true,
 

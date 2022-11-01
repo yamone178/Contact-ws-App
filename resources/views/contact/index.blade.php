@@ -129,7 +129,7 @@
                                             <label  for="flexCheckDefault{{$contact->id}}" class="row-label">
                                                 @if($contact->image != null)
 {{--                                                    <img src="{{asset(Storage::url($contact->image))}}" width="40px" height="40px" class=" contact-img{{$contact->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">--}}
-                                                    <img src="{{asset('storage/image/'.$contact->image)}}" width="40px" height="40px" class=" contact-img{{$contact->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+                                                    <img src="{{asset('storage/'.$contact->image)}}" width="40px" height="40px" class=" contact-img{{$contact->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
                                                 @else
 

@@ -73,7 +73,7 @@
                                             <label  for="flexCheckDefault{{$trashItem->id}}" class="row-label">
                                                 @if($trashItem->image != null)
 {{--                                                    <img src="{{asset(Storage::url($trashItem->image))}}" width="40px" height="40px" class=" contact-img{{$trashItem->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">--}}
-                                                    <img src="{{asset('storage/image/'.$trashItem->image)}}" width="40px" height="40px" class=" contact-img{{$trashItem->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+                                                    <img src="{{asset('storage/'.$trashItem->image)}}" width="40px" height="40px" class=" contact-img{{$trashItem->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
                                                 @else
 

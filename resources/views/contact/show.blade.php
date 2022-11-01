@@ -17,7 +17,7 @@
                                 @if($contact->image != null)
 {{--                                    <img src="{{asset(Storage::url($contact->image))}}" width="150px" height="150px" class="rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">--}}
 
-                                    <img src="{{asset('storage/image/'.$contact->image)}}" width="150px" height="150px" class="rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+                                    <img src="{{asset('storage/'.$contact->image)}}" width="150px" height="150px" class="rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
                                 @else
 

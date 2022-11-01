@@ -69,7 +69,7 @@ class ContactController extends Controller
        if ($request->file('image') != null){
 
             $newName= uniqid().'contact_img.'.$request->file('image')->extension();
-            $request->file('image')->storeAs('public/image', $newName);
+            $request->file('image')->storeAs('public', $newName);
 
            $contact->image = $newName;
        }
@@ -138,8 +138,11 @@ class ContactController extends Controller
 
         if ($request->hasFile('image')){
 
+            //delete old photo
+            Storage::delete("public/".$contact->image);
+
             $newName= uniqid().'contact_img.'.$request->file('image')->extension();
-            $request->file('image')->storeAs('public/image', $newName);
+            $request->file('image')->storeAs('public', $newName);
 
             $contact->image = $newName;
         }
@@ -171,7 +174,7 @@ class ContactController extends Controller
         //forceDelete
         if ($contact->trashed()){
                 if ($contact->image != null){
-                    Storage::delete('/public/image/'.$contact->image);
+                    Storage::delete('public/'.$contact->image);
                 }
             $contact->forceDelete();
         }
@@ -210,7 +213,7 @@ class ContactController extends Controller
            foreach ($contacts as $contact){
                if ($contact->trashed()){
                    if ($contact->image != null){
-                       Storage::delete($contact->image);
+                       Storage::delete('public/'.$contact->image);
                    }
                    $contact->forceDelete();
                }

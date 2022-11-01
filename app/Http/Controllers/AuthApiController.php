@@ -29,11 +29,10 @@ class AuthApiController extends Controller
         if (Auth::attempt($request->only(['email','password']))){
             $token= $request->user()->createToken('phone')->plainTextToken;
             return response([
-                'message'=>'contact is created',
+                'message'=>'User is created',
                 'success'=>true,
                 'status'=>200,
                 'token'=>$token,
-                'auth'=> $user
             ]);
         }
 
@@ -52,7 +51,7 @@ class AuthApiController extends Controller
             return response([
                 'message'=>'login successful',
                 'success'=> true,
-                'status'=> 202,
+                'status'=> 200,
                 'token'=>$token,
 
             ]);

@@ -29,9 +29,9 @@
                         <div class=" d-flex justify-content-between">
 
                             @if($noti->isAccepted == 0)
-                                <form action="{{route('contact.acceptContact', $shared_Contact['id'] )}}" method="post" id="accept{{$noti->id}}">
+                                <form action="{{route('contact.acceptContact', $noti->id )}}" method="post" id="accept{{$noti->id}}">
                                     @csrf
-                                    <input type="text" name="contactStore_id" value="{{$noti->id}}" form="accept{{$noti->id}}" hidden >
+                                    <input type="text" name="contact_id" value="{{$shared_Contact['id']}}" form="accept{{$noti->id}}" hidden >
                                     <button class="btn btn-dark close" form="accept{{$noti->id}}">Accept</button>
                                 </form>
 

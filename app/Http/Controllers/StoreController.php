@@ -126,10 +126,10 @@ class StoreController extends Controller
     public function acceptContact(Request $request,$id){
 
         //find from contact
-       $contact = Contact::findOrFail($id);
+       $contact = Contact::findOrFail($request->contact_id);
 
         //isAccepted
-        StoreContact::where('id',$request->contactStore_id)
+        StoreContact::where('id',$id)
                             ->update(['isAccepted' => 1]);
 
        $newContact = new Contact();
