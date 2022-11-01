@@ -125,12 +125,19 @@ class StoreController extends Controller
 
     public function acceptContact(Request $request,$id){
 
-        //find from contact
-       $contact = Contact::findOrFail($request->contact_id);
+        $storeContact = StoreContact::find($id);
+        $toArray = json_decode($storeContact->shared_Contact);
+        $contact = $toArray;
+
+        if (is_null($contact)){
+            return response()->json([
+                'message'=> 'contact not found'
+            ]);
+        }
+
 
         //isAccepted
-        StoreContact::where('id',$id)
-                            ->update(['isAccepted' => 1]);
+        StoreContact::where('id',$id)->update(['isAccepted' => 1]);
 
        $newContact = new Contact();
        $newContact->create([
@@ -145,8 +152,9 @@ class StoreController extends Controller
 
        ]);
 
-
-        $contact->delete();
+        //Delete old contact from sender
+        $oldContact = Contact::find($contact->id);
+        $oldContact->delete();
 
        return redirect()->back();
     }
@@ -154,11 +162,11 @@ class StoreController extends Controller
 
     public function declineContact (Request $request,$id){
 
-        $storeContact = Contact::findOrFail($id);
+        //Decline Contact
+       StoreContact::where('id',$id)->update(['isAccepted' => 0]);
 
-        //isAccepted
-        StoreContact::where('id',$request->contactStore_id)
-            ->update(['isAccepted' => 0]);
+      return redirect()->back();
+
     }
 
 

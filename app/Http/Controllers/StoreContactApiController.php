@@ -98,7 +98,10 @@ class StoreContactApiController extends Controller
     public function acceptContact(Request $request,$id){
 
         //find from contact
-        $contact = Contact::find($request->contact_id);
+
+        $storeContact = StoreContact::find($id);
+        $toArray = json_decode($storeContact->shared_Contact);
+        $contact = $toArray;
 
         if (is_null($contact)){
             return response()->json([
@@ -119,12 +122,19 @@ class StoreContactApiController extends Controller
             'phone' => $contact->phone,
             'birthday' => $contact->birthday,
             'image' =>  $contact->image,
+            'note'=> $contact->note,
             'user_id' => Auth::user()->id,
 
         ]);
 
         //Delete old contact from sender
-        $contact->delete();
+        $oldContact = Contact::find($contact->id);
+        if (is_null($oldContact)){
+            return response()->json([
+                'message'=> 'Contact has been accepted'
+            ]);
+        }
+        $oldContact->delete();
 
         return response()->json([
             'message'=>'Contact is accepted',
@@ -137,17 +147,15 @@ class StoreContactApiController extends Controller
 
     public function declineContact (Request $request,$id){
 
-        $storeContact = Contact::findOrFail($id);
 
         //isAccepted
-        StoreContact::where('id',$request->contactStore_id)
-            ->update(['isAccepted' => 0]);
+        StoreContact::where('id',$id)->update(['isAccepted' => 0]);
 
         return response()->json([
             'message'=>'Contact is declined',
             'success'=> 'true',
             'status'=> 200,
-        ]);;
+        ]);
     }
 
 }

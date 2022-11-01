@@ -31,13 +31,13 @@
                             @if($noti->isAccepted == 0)
                                 <form action="{{route('contact.acceptContact', $noti->id )}}" method="post" id="accept{{$noti->id}}">
                                     @csrf
-                                    <input type="text" name="contact_id" value="{{$shared_Contact['id']}}" form="accept{{$noti->id}}" hidden >
+{{--                                    <input type="text" name="contact_id" value="{{$shared_Contact['id']}}" form="accept{{$noti->id}}" hidden >--}}
                                     <button class="btn btn-dark close" form="accept{{$noti->id}}">Accept</button>
                                 </form>
 
-                                <form action="{{route('contact.declineContact', $shared_Contact['id'] )}}" method="post" id="decline{{$noti->id}}">
+                                <form action="{{route('contact.declineContact', $noti->id )}}" method="post" id="decline{{$noti->id}}">
                                     @csrf
-                                    <input type="text" name="contactStore_id" value="{{$noti->id}}" form="decline{{$noti->id}}" hidden >
+{{--                                    <input type="text" name="contactStore_id" value="{{$noti->id}}" form="decline{{$noti->id}}" hidden >--}}
                                     <button class="btn btn-dark close" form="decline{{$noti->id}}">Decline</button>
                                 </form>
 

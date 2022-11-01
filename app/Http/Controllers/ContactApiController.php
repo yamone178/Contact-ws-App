@@ -29,7 +29,7 @@ class ContactApiController extends Controller
         return response()->json([
             'success'=> true,
             'status' => 200,
-            'contacts' => ContactResource::collection($contacts)
+            'contacts' => $contacts
         ]);
 
     }
@@ -67,7 +67,7 @@ class ContactApiController extends Controller
         if ($request->hasFile('image')){
 
             $newName= uniqid().'contactImg.'.$request->file('image')->extension();
-            $request->file('image')->storeAs('public/image', $newName);
+            $request->file('image')->storeAs('public', $newName);
 
             $contact->image = $newName;
         }
@@ -160,8 +160,10 @@ class ContactApiController extends Controller
 
         if ($request->hasFile('image')){
 
+            Storage::delete("public/".$contact->image);
+
             $newName= uniqid().'contact_img.'.$request->file('image')->extension();
-            $request->file('image')->storeAs('public/image', $newName);
+            $request->file('image')->storeAs('public/', $newName);
 
             $contact->image = $newName;
         }
@@ -197,6 +199,15 @@ class ContactApiController extends Controller
             ]);
         }
 
+        //forceDelete
+        if ($contact->trashed()){
+            if ($contact->image != null){
+                Storage::delete('public/'.$contact->image);
+            }
+            $contact->forceDelete();
+        }
+
+        //soft Delete
         $contact->delete();
 
 
@@ -215,7 +226,7 @@ class ContactApiController extends Controller
             ->paginate(6)->withQueryString();
        return response()->json([
            'status' => 200,
-           'contacts' => ContactResource::collection($trashItems)
+           'contacts' => $trashItems
        ]);
     }
 
@@ -250,6 +261,8 @@ class ContactApiController extends Controller
                 'status'=> 404
             ]);
         }
+
+        //duplicate
         $newContact= $contact->replicate();
         $newContact->created_at = Carbon::now();
         $newContact->save();
@@ -276,7 +289,7 @@ class ContactApiController extends Controller
         foreach ($contacts as $contact){
             if ($contact->trashed()){
                 if ($contact->image != null){
-                    Storage::delete($contact->image);
+                    Storage::delete('public/'.$contact->image);
                 }
                 $contact->forceDelete();
             }
