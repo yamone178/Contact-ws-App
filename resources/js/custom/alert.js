@@ -37,10 +37,10 @@ window.showToast = function (message){
     })
 }
 
-window.errorAlert = (message) =>{
+window.errorAlert = (message, icon, title)  =>{
     Swal.fire({
-        icon: 'error',
-        title: 'Try Again',
+        icon: icon,
+        title: title,
         text: message,
     })
 }

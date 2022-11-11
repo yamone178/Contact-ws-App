@@ -50,7 +50,7 @@ class StoreController extends Controller
         $storeContact->receiver= User::where('email',$request->email)->first()->id;
 
         $storeContact->save();
-       return  redirect()->back();
+       return  redirect()->back()->with('status',"Sending Contact Successful");
 
 
     }
@@ -111,9 +111,12 @@ class StoreController extends Controller
      * @param  \App\Models\StoreContact  $storeContact
      * @return \Illuminate\Http\Response
      */
-    public function destroy(StoreContact $storeContact)
+    public function destroy(StoreContact $storeContact, $id)
     {
-        //
+        $contact= StoreContact::findorFail($id);
+        $contact->delete();
+
+        return redirect()->back();
     }
 
     public function noti(){
@@ -147,16 +150,21 @@ class StoreController extends Controller
            'email' => $contact->email,
            'phone' => $contact->phone,
            'birthday' => $contact->birthday,
-           'image' =>  $contact->image,
+           'image' => $contact->image,
            'user_id' => Auth::user()->id,
 
        ]);
 
+       $fullName = "$contact->firstName $contact->lastName";
+       $senderEmail = User::find($storeContact->sender)->email;
+
         //Delete old contact from sender
         $oldContact = Contact::find($contact->id);
-        $oldContact->delete();
+        if ($oldContact){
+            $oldContact->delete();
+        }
 
-       return redirect()->back();
+       return redirect()->back()->with('status', "Contact name $fullName is accepted from $senderEmail");
     }
 
 

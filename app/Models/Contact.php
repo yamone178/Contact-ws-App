@@ -13,6 +13,11 @@ class Contact extends Model
 
     protected $fillable=['id','firstName','lastName','phone','image','email','jobTitle','user_id'];
 
+
+    public function labels(){
+        return $this->belongsToMany(Label::class);
+    }
+
     public static function getFirstLetter($word){
         $words = explode(" ", $word);
 

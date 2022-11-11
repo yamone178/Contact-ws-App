@@ -17,7 +17,7 @@
                                 @if($contact->image != null)
 {{--                                    <img src="{{asset(Storage::url($contact->image))}}" width="150px" height="150px" class="rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">--}}
 
-                                    <img src="{{asset('storage/'.$contact->image)}}" width="150px" height="150px" class="rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+                                    <img src="{{$contact->image}}" width="150px" height="150px" class="rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
                                 @else
 
@@ -30,7 +30,13 @@
 
                                 @endif
 
-                                <h3 @class('ms-4')>{{$contact->firstName}} {{$contact->lastName}}</h3>
+                                <div class="">
+                                    <h3 @class('ms-4')>{{$contact->firstName}} {{$contact->lastName}}</h3>
+
+                                    @foreach($contact->labels as $label)
+                                        <div class="px-3 py-2 ms-4 border-2 d-inline-block border rounded-pill text">{{$label->name}}</div>
+                                    @endforeach
+                                </div>
                             </div>
 
                             <div class="" style="width: 100px;">

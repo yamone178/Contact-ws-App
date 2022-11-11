@@ -3,8 +3,8 @@
 
 
 @section('content')
-    <div class="container ">
-        <div class="row">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
             <div class="col-12">
                 <div class="card border-0 shadow-sm">
                     <div class="card-body">
@@ -94,7 +94,7 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Phone</th>
-                                <th>Job Title</th>
+                                <th>label</th>
                                 <th>Action</th>
                             </tr>
 
@@ -129,7 +129,7 @@
                                             <label  for="flexCheckDefault{{$contact->id}}" class="row-label">
                                                 @if($contact->image != null)
 {{--                                                    <img src="{{asset(Storage::url($contact->image))}}" width="40px" height="40px" class=" contact-img{{$contact->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">--}}
-                                                    <img src="{{asset('storage/'.$contact->image)}}" width="40px" height="40px" class=" contact-img{{$contact->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+                                                    <img src="{{$contact->image}}" width="40px" height="40px" class=" contact-img{{$contact->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
                                                 @else
 
@@ -150,7 +150,11 @@
                                     </td>
                                     <td onclick=window.forward("{{route('contact.show',$contact->id)}}")>{{$contact->email}}</td>
                                     <td onclick=window.forward("{{route('contact.show',$contact->id)}}")>{{$contact->phone}}</td>
-                                    <td onclick=window.forward("{{route('contact.show',$contact->id)}}")>{{$contact->jobTitle}}</td>
+                                    <td onclick=window.forward("{{route('contact.show',$contact->id)}}")>
+                                        @foreach($contact->labels as $label)
+                                            {{$label->name}}
+                                        @endforeach
+                                    </td>
                                     <td>
 
 
@@ -194,6 +198,16 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            @error('email')
+                                            <script>
+                                                window.addEventListener('load',function (){
+                                                    errorAlert("{{$message}}", 'error','Try Again')
+                                                })
+
+                                            </script>
+                                            @enderror
+
 
 
                                             <form action="{{route('contact.destroy',$contact->id)}}" method="post">

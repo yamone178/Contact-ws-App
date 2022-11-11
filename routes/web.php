@@ -16,23 +16,30 @@ use App\Http\Controllers\StoreController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('contact.index');
+});
+
+Route::get('/home', function () {
+    return redirect()->route('contact.index');
 });
 
 Auth::routes();
 
-Route::resource('contact',ContactController::class);
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/trash',[ContactController::class,'trash'])->name('contact.trash');
-Route::post('/restore/{id}',[ContactController::class,'restore'])->name('contact.restore');
-Route::post('/multiple-delete',[ContactController::class,'multipleDelete'])->name('contact.multipleDelete');
-Route::post('/clone/{id}',[ContactController::class,'clone'])->name('contact.clone');
-Route::post('/multiple-clone',[ContactController::class,'multipleClone'])->name('contact.multiple-clone');
-Route::post('/import',[ContactController::class,'import'])->name('contact.import');
-Route::get('/export',[ContactController::class,'export'])->name('contact.export');
-Route::resource('contactStore',StoreController::class);
-Route::get('/noti',[StoreController::class,'noti'])->name('contact.noti');
-Route::post('/accept-contact/{id}', [StoreController::class,'acceptContact'])->name('contact.acceptContact');
+Route::middleware('auth')->group(function (){
+    Route::resource('contact',ContactController::class);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/trash',[ContactController::class,'trash'])->name('contact.trash');
+    Route::post('/restore/{id}',[ContactController::class,'restore'])->name('contact.restore');
+    Route::post('/multiple-delete',[ContactController::class,'multipleDelete'])->name('contact.multipleDelete');
+    Route::post('/clone/{id}',[ContactController::class,'clone'])->name('contact.clone');
+    Route::post('/multiple-clone',[ContactController::class,'multipleClone'])->name('contact.multiple-clone');
+    Route::post('/import',[ContactController::class,'import'])->name('contact.import');
+    Route::get('/export',[ContactController::class,'export'])->name('contact.export');
+    Route::resource('contactStore',StoreController::class);
+    Route::get('/noti',[StoreController::class,'noti'])->name('contact.noti');
+    Route::post('/accept-contact/{id}', [StoreController::class,'acceptContact'])->name('contact.acceptContact');
 //Route::post('/contactStore/{id}',[StoreController::class,'addToContactStore'])->name('contact.addToStore');
-Route::post('/decline-contact/{id}',[StoreController::class,'declineContact'])->name('contact.declineContact');
-Route::post('/multiple-store-contact',[StoreController::class,'multipleStoreContact'])->name('contact.multipleStoreContact');
+    Route::post('/decline-contact/{id}',[StoreController::class,'declineContact'])->name('contact.declineContact');
+    Route::post('/multiple-store-contact',[StoreController::class,'multipleStoreContact'])->name('contact.multipleStoreContact');
+    Route::resource('label',\App\Http\Controllers\LabelController::class);
+});

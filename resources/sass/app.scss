@@ -61,7 +61,9 @@ body{
 }
 
 .sidebar{
-    max-width: 250px !important;
+    z-index: 1;
+    min-width: 270px !important;
+    max-width: 300px !important;
 }
 
 .accordion-body .list-group-item{

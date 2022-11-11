@@ -29,7 +29,7 @@ class ContactApiController extends Controller
         return response()->json([
             'success'=> true,
             'status' => 200,
-            'contacts' => $contacts
+            'contacts'=> $contacts
         ]);
 
     }
@@ -69,7 +69,7 @@ class ContactApiController extends Controller
             $newName= uniqid().'contactImg.'.$request->file('image')->extension();
             $request->file('image')->storeAs('public', $newName);
 
-            $contact->image = $newName;
+            $contact->image = asset(Storage::url($newName));
         }
 
 
@@ -279,9 +279,10 @@ class ContactApiController extends Controller
 
     public function multipleDelete(Request $request){
 
+
         $contacts= Contact::where('user_id',Auth::id())
             ->withTrashed()
-            ->whereIn('id',$request)
+            ->whereIn('id',$request->checks)
             ->get();
 
 
@@ -312,7 +313,7 @@ class ContactApiController extends Controller
     public function multipleClone(Request $request){
 
         $contacts= Contact::where('user_id',Auth::id())
-                    ->whereIn('id',$request)->get();
+                    ->whereIn('id',$request->checks)->get();
         foreach ($contacts as $contact){
             $newContact= $contact->replicate();
             $newContact->created_at = Carbon::now();

@@ -26,18 +26,20 @@ Route::prefix('v1')->group(function (){
 
     Route::middleware('auth:sanctum')->group(function (){
         Route::post('logout',[AuthApiController::class,'logout'])->name('api-auth.logout');
+        Route::post("/logout-all",[AuthApiController::class,'logoutAll'])->name('api.logout-all');
 
-        Route::apiResource('contacts',ContactApiController::class);
-        Route::get('trash',[ContactApiController::class,'trash'])->name('contact.trash');
-        Route::post('restore/{id}',[ContactApiController::class,'restore'])->name('contact.restore');
+
+        Route::apiResource('contact',ContactApiController::class);
+        Route::get('trash',[ContactApiController::class,'trash'])->name('api-contact.trash');
+        Route::post('restore/{id}',[ContactApiController::class,'restore'])->name('api-contact.restore');
         Route::post('clone/{id}',[ContactApiController::class,'clone'])->name('contact.clone');
-        Route::post('/multiple-delete',[ContactApiController::class,'multipleDelete'])->name('contact.multipleDelete');
-        Route::post('/multiple-clone',[ContactApiController::class,'multipleClone'])->name('contact.multiple-clone');
+        Route::post('/multiple-delete',[ContactApiController::class,'multipleDelete'])->name('api-contact.multipleDelete');
+        Route::post('/multiple-clone',[ContactApiController::class,'multipleClone'])->name('api-contact.multiple-clone');
         Route::apiResource('contactStore',StoreContactApiController::class);
 //        Route::get('/noti',[StoreContactApiController::class,'noti'])->name('contact.noti');
-        Route::post('/accept-contact/{id}', [StoreContactApiController::class,'acceptContact'])->name('contact.acceptContact');
-        Route::post('/contactStore/{id}',[StoreContactApiController::class,'addToContactStore'])->name('contact.addToStore');
-        Route::post('/decline-contact/{id}',[StoreContactApiController::class,'declineContact'])->name('contact.declineContact');
+        Route::post('/accept-contact/{id}', [StoreContactApiController::class,'acceptContact'])->name('api-contact.acceptContact');
+        Route::post('/contactStore/{id}',[StoreContactApiController::class,'addToContactStore'])->name('api-contact.addToStore');
+        Route::post('/decline-contact/{id}',[StoreContactApiController::class,'declineContact'])->name('api-contact.declineContact');
 
 
 

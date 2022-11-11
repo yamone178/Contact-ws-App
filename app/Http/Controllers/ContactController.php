@@ -65,12 +65,13 @@ class ContactController extends Controller
         $contact->user_id = Auth::user()->id;
 
 
+
        if ($request->file('image') != null){
 
             $newName= uniqid().'contact_img.'.$request->file('image')->extension();
             $request->file('image')->storeAs('public', $newName);
 
-           $contact->image = $newName;
+           $contact->image = asset(Storage::url($newName));
        }
 
 //        if ($request->hasFile('image')){
@@ -78,14 +79,8 @@ class ContactController extends Controller
 //            $contact->image= $newName;
 //        }
 
-
-
-
         $contact->save();
-
-
-
-
+        $contact->labels()->attach($request->labels);
         return  redirect()->route('contact.index')->with('status','contact is created');
     }
 
@@ -143,7 +138,7 @@ class ContactController extends Controller
             $newName= uniqid().'contact_img.'.$request->file('image')->extension();
             $request->file('image')->storeAs('public', $newName);
 
-            $contact->image = $newName;
+            $contact->image = asset(Storage::url($newName));
         }
 
 //        if ($request->hasFile('image')){
@@ -152,6 +147,8 @@ class ContactController extends Controller
 //        }
 
         $contact->update();
+        $contact->labels()->sync($request->labels);
+
 
         return  redirect()->route('contact.index')->with('status','contact is updated');
 
@@ -237,12 +234,12 @@ class ContactController extends Controller
 
     public function clone($id){
 
-        $contact= Contact::find($id);
-       $newContact= $contact->replicate();
+        $contact= Contact::where('user_id',Auth::id())->findOrFail($id);
+        $newContact= $contact->replicate();
       $newContact->created_at = Carbon::now();
         $newContact->save();
 
-        return redirect()->route('contact.index');
+        return redirect()->route('contact.index')->with('status','Contact is duplicated');
     }
 
     public function multipleClone(Request $request){

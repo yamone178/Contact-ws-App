@@ -74,10 +74,7 @@ class AuthApiController extends Controller
 
     public function logoutAll(){
         Auth::user()->tokens()->delete();
-        return response()->json([
-            'message'=> 'logout successful',
-            'success'=> true
-        ]);
+        return response()->json(["message"=>"logout successfully"],204);
     }
 
 }

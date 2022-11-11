@@ -6,6 +6,7 @@
             <div class="col-12">
                 <div class="card border-0">
                     <div class="card-body">
+
                         <div class=" d-flex justify-content-between align-items-end ">
                             <div class="d-inline-block position-relative create-contact-img">
                                 <img src="{{asset('localImages/profile.png')}}" class="rounded-circle contact-Img-area position-relative" width="150px" alt="">
@@ -26,6 +27,17 @@
                                    class="contact-imgInput"
 
                             >
+
+                            @foreach(\App\Models\Label::latest('id')->get() as $label)
+                                <div class="form-check">
+                                    <input form="contactCreateForm" name="labels[]" class="form-check-input"  type="checkbox" value="{{$label->id}}" id="flexCheckDefault{{$label->id}}">
+                                    <label   class="form-check-label" for="flexCheckDefault{{$label->id}}">
+                                        {{$label->name}}
+                                    </label>
+                                </div>
+
+
+                            @endforeach
 
                             <div  class="">
                                 <button form="contactCreateForm" class="btn btn-primary">Save</button>

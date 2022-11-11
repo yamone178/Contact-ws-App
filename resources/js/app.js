@@ -39,5 +39,13 @@ window.changeRoute = (route, message = 'Are you sure') =>{
     window.confirmAlert(message, multiSelectForm)
 }
 
+let close  =document.querySelector('.close');
+let notiBox= document.querySelector('.notiBox');
+
+close.addEventListener('click',function (e){
+    e.target.preventDefault();
+    notiBox.remove();
+})
+
 
 

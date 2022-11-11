@@ -22,7 +22,7 @@ class ContactResource extends JsonResource
             'lastName'=>   $this-> lastName,
            'phone'=> $this->phone,
            'email'=> $this->email,
-            'image'=> asset(Storage::url($this->image)),
+            'image'=> $this->image,
             'jobTitle'=> $this->jobTitle,
             'birthday'=> $this->birthday,
             'note' => $this->note,

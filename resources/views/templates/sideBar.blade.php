@@ -1,6 +1,6 @@
 
 
-<div class="bg-white shadow-sm p-3  min-vh-100 " style="z-index: 1; width: 270px">
+<div class="bg-white shadow-sm p-3  min-vh-100 sidebar">
 
     <div class="">
         <div class="list-group fs-base">
@@ -41,10 +41,50 @@
                     <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                         <div class="accordion-body px-0">
                             <div class="list-group ">
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#labelModal">
                                     <span class="bi bi-plus"></span>
                                     Create Label
                                 </button>
+
+                                @foreach(\App\Models\Label::latest('id')->get() as $label)
+
+                                    <span>
+                                        <div class="position-relative">
+                                            <a href="{{route('label.show',$label->id)}}" id="renameForm" class="list-group-item d-flex justify-content-between ">
+
+
+                                                <span class="">
+                                                    <i class=" me-2 bi bi-journal-arrow-up"></i>
+                                                    <span>
+                                                        {{$label->name}}
+                                                    </span>
+                                                </span>
+
+
+
+                                            </a>
+
+
+
+                                        <div class="position-absolute d-flex align-items-center h-100" style="right: 0; z-index: 2; top: 0">
+                                           <span  class="renameBtn me-2" data-bs-toggle="modal" data-bs-target="#editLabelModal{{$label->id}}">
+                                               <i class="bi bi-pencil"></i>
+                                            </span>
+                                            <form action="{{route('label.destroy',$label->id)}}" method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <button class="btn">
+                                                    <i class="bi bi-trash3"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+
+                                        </div>
+                                    </span>
+
+
+                                @endforeach
+
                             </div>
                         </div>
                     </div>
@@ -52,6 +92,7 @@
                 <hr>
 
             </div>
+
 
             <a href="{{route('contact.index')}}" class="list-group-item fs-5">
 
@@ -102,3 +143,64 @@
     </div>
 
 </div>
+
+<div class="modal" id="labelModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Label</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form action="{{route('label.store')}}" id="createLabelForm" method="post">
+                    @csrf
+                    <label for="Form Label">name</label>
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" name="name">
+                    @error('name')
+                    <span class="invalid-feedback">
+                      {{$message}}
+                    </span>
+                    @enderror
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button form="createLabelForm"  class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@foreach(\App\Models\Label::latest('id')->get() as $label)
+    <div class="modal" id="editLabelModal{{$label->id}}" tabindex="-1" aria-labelledby="editLabelModal{{$label->id}}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editLabelModal{{$label->id}}">Rename Label</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form action="{{route('label.update',$label->id)}}" id="updateLabelForm{{$label->id}}" method="post">
+                        @method('put')
+                        @csrf
+                        <label for="Form Label">name</label>
+                        <input form="updateLabelForm{{$label->id}}" value="{{old('name',$label->name)}}" type="text" class="form-control @error('name') is-invalid @enderror" name="name">
+                        @error('name')
+                        <span class="invalid-feedback">
+                      {{$message}}
+                    </span>
+                        @enderror
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button form="updateLabelForm{{$label->id}}"  class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endforeach
+

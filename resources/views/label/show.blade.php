@@ -57,7 +57,7 @@
                                 </td>
                             </tr>
 
-                            @forelse($trashItems as $trashItem)
+                            @forelse($label->contacts as $contact)
                                 <tr class="" >
                                     <td>
                                         <div class=" d-flex  align-items-center">
@@ -65,45 +65,40 @@
                                             <input
                                                 class="form-check-input  me-3 check-box contact-select "
                                                 name="checks[]"  form="deleteMultipleForm" type="checkbox"
-                                                value="{{$trashItem->id}}" id="flexCheckDefault{{$trashItem->id}}"
+                                                value="{{$contact->id}}" id="flexCheckDefault{{$contact->id}}"
 
                                             >
 
 
-                                            <label  for="flexCheckDefault{{$trashItem->id}}" class="row-label">
-                                                @if($trashItem->image != null)
-{{--                                                    <img src="{{asset(Storage::url($trashItem->image))}}" width="40px" height="40px" class=" contact-img{{$trashItem->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">--}}
-                                                    <img src="{{$trashItem->image}}" width="40px" height="40px" class=" contact-img{{$trashItem->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
+                                            <label  for="flexCheckDefault{{$contact->id}}" class="row-label">
+                                                @if($contact->image != null)
+                                                    {{--                                                    <img src="{{asset(Storage::url($contact->image))}}" width="40px" height="40px" class=" contact-img{{$contact->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">--}}
+                                                    <img src="{{$contact->image}}" width="40px" height="40px" class=" contact-img{{$contact->id}} imgArea rounded-circle border border-1 border-primary me-2" style="object-fit: cover" alt="">
 
                                                 @else
 
 
 
                                                     <div class="d-inline-block me-2">
-                                                        <span class="noImg imgArea" style="background: {{\App\Models\Contact::randBackgroundColor()}}"> {{ucfirst(\App\Models\Contact::getFirstLetter($trashItem->firstName))}}</span>
+                                                        <span class="noImg imgArea" style="background: {{\App\Models\Contact::randBackgroundColor()}}"> {{ucfirst(\App\Models\Contact::getFirstLetter($contact->firstName))}}</span>
 
                                                     </div>
 
                                                 @endif
-                                                {{ucwords($trashItem->firstName)}}
+                                                {{ucwords($contact->firstName)}}
                                             </label>
 
 
 
                                         </div>
                                     </td>
-                                    <td>{{$trashItem->email}}</td>
-                                    <td>{{$trashItem->phone}}</td>
-                                    <td>{{$trashItem->jobTitle}}</td>
+                                    <td>{{$contact->email}}</td>
+                                    <td>{{$contact->phone}}</td>
+                                    <td>{{$contact->jobTitle}}</td>
                                     <td>
 
                                         <div class="d-flex">
-                                            <form action="{{route('contact.restore',$trashItem->id)}}" method="post">
-                                                @csrf
-                                                <button class="btn btn-sm btn-dark me-3">Restore</button>
-                                            </form>
-
-                                            <form action="{{route('contact.destroy',$trashItem->id)}}" method="post">
+                                            <form action="{{route('contact.destroy',$contact->id)}}" method="post">
                                                 @csrf
                                                 @method('delete')
                                                 <button class="btn btn-sm btn-dark">Del</button>
@@ -126,7 +121,6 @@
                         </table>
 
 
-                        <div class="">{{$trashItems->links()}}</div>
                     </div>
 
                 </div>

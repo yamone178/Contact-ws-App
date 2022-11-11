@@ -86,13 +86,15 @@ class StoreContactApiController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contact= StoreContact::find($id);
+        $contact->delete;
+
+        return response([
+           'status'=> 200,
+           'message'=> "Contact is removed from store"
+        ]);
     }
 
-    public function noti(){
-
-
-    }
 
 
     public function acceptContact(Request $request,$id){
