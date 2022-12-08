@@ -28,8 +28,10 @@ Route::prefix('v1')->group(function (){
         Route::post('logout',[AuthApiController::class,'logout'])->name('api-auth.logout');
         Route::post("/logout-all",[AuthApiController::class,'logoutAll'])->name('api.logout-all');
 
+        Route::apiResource('label',\App\Http\Controllers\LabelApiController::class);
 
         Route::apiResource('contact',ContactApiController::class);
+
         Route::get('trash',[ContactApiController::class,'trash'])->name('api-contact.trash');
         Route::post('restore/{id}',[ContactApiController::class,'restore'])->name('api-contact.restore');
         Route::post('clone/{id}',[ContactApiController::class,'clone'])->name('contact.clone');
@@ -40,7 +42,6 @@ Route::prefix('v1')->group(function (){
         Route::post('/accept-contact/{id}', [StoreContactApiController::class,'acceptContact'])->name('api-contact.acceptContact');
         Route::post('/contactStore/{id}',[StoreContactApiController::class,'addToContactStore'])->name('api-contact.addToStore');
         Route::post('/decline-contact/{id}',[StoreContactApiController::class,'declineContact'])->name('api-contact.declineContact');
-
 
 
         //laravel excel

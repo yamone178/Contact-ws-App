@@ -28,9 +28,8 @@ class ContactApiController extends Controller
                 ->withQueryString();
         return response()->json([
             'success'=> true,
-            'status' => 200,
             'contacts'=> $contacts
-        ]);
+        ],200);
 
     }
 
@@ -75,12 +74,15 @@ class ContactApiController extends Controller
 
         $contact->save();
 
+        $contact->labels()->attach($request->labels);
+
+
         return response()->json([
             'message'=>'Contact created',
             'success'=> 'true',
-            'status'=> 200,
-            'contact'=> new ContactResource($contact)
-        ]);
+            'contact'=> new ContactResource($contact),
+
+        ],200);
     }
 
     /**
@@ -176,10 +178,9 @@ class ContactApiController extends Controller
 
         return response()->json([
             'message'=> 'Contact is updated',
-            'status'=> 200,
             'success'=> true,
             'contact'=> new ContactResource($contact)
-        ]);
+        ],200);
     }
 
     /**
@@ -195,8 +196,7 @@ class ContactApiController extends Controller
         if (is_null($contact)){
             return  response()->json([
                 'message'=> 'Contact not found',
-                'status'=> 404
-            ]);
+            ],404);
         }
 
         //forceDelete
@@ -213,10 +213,9 @@ class ContactApiController extends Controller
 
         return  response()->json([
             'message'=> 'Contact is deleted',
-            'status'=>200,
             'success'=> true
 
-        ]);
+        ],200);
     }
 
     public function trash(){
@@ -225,9 +224,8 @@ class ContactApiController extends Controller
             ->onlyTrashed()->latest('id')
             ->paginate(6)->withQueryString();
        return response()->json([
-           'status' => 200,
            'contacts' => $trashItems
-       ]);
+       ],200);
     }
 
     public function restore($id){
@@ -245,11 +243,10 @@ class ContactApiController extends Controller
 
         return  response()->json([
             'message'=> 'Contact is restored',
-            'status'=>200,
             'success'=> true,
 
 
-        ]);
+        ],200);
     }
 
     public function clone($id){
@@ -258,8 +255,7 @@ class ContactApiController extends Controller
         if (is_null($contact)){
             return  response()->json([
                 'message'=> 'Contact not found',
-                'status'=> 404
-            ]);
+            ],404);
         }
 
         //duplicate
@@ -269,11 +265,10 @@ class ContactApiController extends Controller
 
         return  response()->json([
             'message'=> 'Contact is cloned',
-            'status'=>200,
             'success'=> true,
 
 
-        ]);
+        ],200);
 
     }
 
@@ -303,10 +298,9 @@ class ContactApiController extends Controller
 
         return  response()->json([
             'message'=> count($contacts)." Contacts are deleted",
-            'status'=>200,
             'success'=> true,
 
-        ]);
+        ],200);
 
     }
 
@@ -322,10 +316,9 @@ class ContactApiController extends Controller
 
         return  response()->json([
             'message'=> count($contacts)." Contacts are cloned",
-            'status'=>200,
             'success'=> true,
 
-        ]);
+        ],200);
     }
 
     public function export(){

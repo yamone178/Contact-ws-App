@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('search')
+    <form id="searchForm" action="{{route('contact.index')}}" method="get" class="d-flex w-75" role="search">
+        <input form="searchForm" class="form-control me-2 border-1 border-secondary  shadow-sm" name="keyword" type="search" placeholder="Search" aria-label="Search">
+        <button form="searchForm"  class="btn  shadow-sm border-secondary" type="submit">
+            <i class="bi bi-search"></i>
+        </button>
+    </form>
+@endsection
 
 
 @section('content')

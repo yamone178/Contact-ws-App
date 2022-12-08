@@ -7,67 +7,6 @@
 
 
         <div class=" m-5 w-100">
-{{--            @forelse($notis as $noti)--}}
-
-{{--                <?php--}}
-
-{{--                    $shared_Contact = json_decode($noti->shared_Contact,true)--}}
-{{--                    ?>--}}
-{{--            <div class="col-6 notiBox">--}}
-{{--                <div role="alert" aria-live="assertive" aria-atomic="true" class="toast d-block mb-3" data-bs-autohide="false">--}}
-{{--                    <div class="toast-header">--}}
-{{--                        <strong class="me-auto">Would you like to accept ?</strong>--}}
-{{--                        <small>{{$noti->created_at->diffforHumans()}}</small>--}}
-
-{{--                        <form action="{{route('contactStore.destroy',$noti->id)}}" id="removeNoti{{$noti->id}}" method="post">--}}
-{{--                            @csrf--}}
-{{--                            @method('delete')--}}
-{{--                            <button type="submit" class="btn-close" form="removeNoti{{$noti->id}}" ></button>--}}
-
-{{--                        </form>--}}
-{{--                    </div>--}}
-{{--                    <div class="toast-body">--}}
-{{--                        <div class="d-flex justify-content-between justify-content-center">--}}
-{{--                            <p class="mb-0 badge bg-black">Contact name : {{$shared_Contact['firstName']}} {{$shared_Contact['lastName']}}  </p>--}}
-{{--                            <p class="badge bg-dark mb-0">from {{\App\Models\User::find($noti->sender)->name}}</p>--}}
-{{--                        </div>--}}
-{{--                        <hr>--}}
-{{--                        <div class=" d-flex justify-content-between">--}}
-
-{{--                            @if($noti->isAccepted == 0 )--}}
-{{--                                <form action="{{route('contact.acceptContact', $noti->id )}}" method="post" id="accept{{$noti->id}}">--}}
-{{--                                    @csrf--}}
-{{--                                    <input type="text" name="contact_id" value="{{$shared_Contact['id']}}" form="accept{{$noti->id}}" hidden >--}}
-{{--                                    <button class="btn btn-dark close" form="accept{{$noti->id}}">Accept</button>--}}
-{{--                                </form>--}}
-
-{{--                                <form action="{{route('contact.declineContact', $noti->id )}}" method="post" id="decline{{$noti->id}}">--}}
-{{--                                    @csrf--}}
-{{--                                    <input type="text" name="contactStore_id" value="{{$noti->id}}" form="decline{{$noti->id}}" hidden >--}}
-{{--                                    <button class="btn btn-dark close" form="decline{{$noti->id}}">Decline</button>--}}
-{{--                                </form>--}}
-
-
-{{--                            @else--}}
-
-{{--                                <button disabled class="badge bg-success">Accepted</button>--}}
-
-{{--                            @endif--}}
-
-
-
-{{--                        </div>--}}
-{{--                    </div>--}}
-
-{{--                </div>--}}
-
-{{--            </div>--}}
-
-{{--            @empty--}}
-
-{{--                <h2>There is no notification</h2>--}}
-
-{{--            @endforelse--}}
 
 
             @forelse($notis as $noti)

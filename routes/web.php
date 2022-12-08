@@ -23,9 +23,9 @@ Route::get('/home', function () {
     return redirect()->route('contact.index');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::middleware('auth')->group(function (){
+Route::middleware(['auth'])->group(function (){
     Route::resource('contact',ContactController::class);
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
     Route::get('/trash',[ContactController::class,'trash'])->name('contact.trash');
@@ -42,4 +42,5 @@ Route::middleware('auth')->group(function (){
     Route::post('/decline-contact/{id}',[StoreController::class,'declineContact'])->name('contact.declineContact');
     Route::post('/multiple-store-contact',[StoreController::class,'multipleStoreContact'])->name('contact.multipleStoreContact');
     Route::resource('label',\App\Http\Controllers\LabelController::class);
+
 });

@@ -31,14 +31,26 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
 
-                    </ul>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                    <div class=" w-75 d-flex align-items-center justify-content-center ms-auto">
+                        @if(request('keyword'))
+                            <p class="mb-0 me-3">
+                                <a href="{{route('contact.index')}}" class="btn btn-sm ">
+                                    <i class="bi bi-trash3"></i>
+                                </a>
+                                Search by : {{request('keyword')}}
+                            </p>
+                        @endif
+                        @yield('search')
+                    </div>
+
+                    <!-- Left Side Of Navbar -->
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
@@ -53,6 +65,19 @@
                                 </li>
                             @endif
                         @else
+
+
+                            <li class="nav-item me-3">
+                                <a class="nav-link position-relative" href="{{ route('contact.noti') }} ">
+                                    <i class="bi bi-bell fs-3 "></i>
+                                    <span class="position-absolute top-0  badge rounded-pill bg-danger" style="right: -4px">
+                                        {{\App\Models\StoreContact::where('receiver', Auth::id())->where('isAccepted',0)->count()}}
+                                      </span>
+                                </a>
+
+
+                            </li>
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -93,7 +118,7 @@
 
 
                            @yield('content')
-                      
+
                    </div>
 
                 @endauth

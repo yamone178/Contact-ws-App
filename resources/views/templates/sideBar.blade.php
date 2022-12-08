@@ -19,10 +19,6 @@
                 <span>Contacts</span>
             </a>
 
-            <a href="{{route('contact.noti')}}" class="list-group-item fs-5">
-                <span>Noti</span>
-            </a>
-
 
             <hr>
 

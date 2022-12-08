@@ -34,7 +34,9 @@
                                     <h3 @class('ms-4')>{{$contact->firstName}} {{$contact->lastName}}</h3>
 
                                     @foreach($contact->labels as $label)
-                                        <div class="px-3 py-2 ms-4 border-2 d-inline-block border rounded-pill text">{{$label->name}}</div>
+                                        <a href="{{route('label.show', $label->id)}}" class="px-3 py-2 ms-4 small text-decoration-none border-2 text-white bg-secondary d-inline-block border rounded-pill text">
+                                            {{$label->name}}
+                                        </a>
                                     @endforeach
                                 </div>
                             </div>

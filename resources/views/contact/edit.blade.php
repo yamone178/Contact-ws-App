@@ -40,12 +40,22 @@
 
                             >
 
-                            @foreach(\App\Models\Label::latest('id')->get() as $label)
+                            @foreach(\App\Models\Label::latest('id')->get() as $key=>$label)
                                 <div class="form-check">
-                                    <input form="contactUpdateForm" name="labels[]" class="form-check-input"  type="checkbox" value="{{$label->id}}" id="flexCheckDefault{{$label->id}}">
+
+
+                                        <input
+                                            @foreach($contact->labels as $contactLabel)
+                                                {{$contactLabel->id == $label->id ? 'checked': ''}}
+                                            @endforeach
+                                            form="contactUpdateForm" name="labels[]" class="form-check-input"  type="checkbox" value="{{$label->id}}" id="flexCheckDefault{{$label->id}}">
+
+
                                     <label   class="form-check-label" for="flexCheckDefault{{$label->id}}">
                                         {{$label->name}}
                                     </label>
+
+
                                 </div>
 
 
@@ -76,6 +86,7 @@
                                    </span>
                                 @enderror
                             </div>
+
 
                             <div class=" mb-3">
                                 <label class="form-label">Last Name</label>

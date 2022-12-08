@@ -25,11 +25,15 @@ class ContactController extends Controller
      */
     public function index()
     {
+
         $contacts= Contact::where('user_id',Auth::id())
+                    ->where(function ($q){
+                        Contact::searchBox($q);
+                })
+            ->with('labels')
             ->latest('id')
             ->paginate(6)
-            ->withQueryString()
-        ;
+            ->withQueryString();
 
         return  view('contact.index',compact(['contacts']));
     }
@@ -64,8 +68,6 @@ class ContactController extends Controller
         $contact->note= $request->note;
         $contact->user_id = Auth::user()->id;
 
-
-
        if ($request->file('image') != null){
 
             $newName= uniqid().'contact_img.'.$request->file('image')->extension();
@@ -78,9 +80,9 @@ class ContactController extends Controller
 //            $newName= $request->file('image')->store('public/image');
 //            $contact->image= $newName;
 //        }
-
         $contact->save();
         $contact->labels()->attach($request->labels);
+        return $contact->labels;
         return  redirect()->route('contact.index')->with('status','contact is created');
     }
 
@@ -104,7 +106,6 @@ class ContactController extends Controller
      */
     public function edit(Contact $contact)
     {
-
         Gate::authorize('update',$contact);
         return view('contact.edit', compact('contact'));
 

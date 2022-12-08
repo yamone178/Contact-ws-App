@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Contact extends Model
 {
@@ -12,6 +13,7 @@ class Contact extends Model
     use SoftDeletes;
 
     protected $fillable=['id','firstName','lastName','phone','image','email','jobTitle','user_id'];
+
 
 
     public function labels(){
@@ -38,6 +40,17 @@ class Contact extends Model
         $randNumber=rand(0,$count);
         $randBgColor= $background_colors[$randNumber];
         return $randBgColor;
+    }
+
+    public  static  function searchBox($q){
+
+               $q ->when(request('keyword'),function ($query){
+                   $keyword = request('keyword');
+                   $query->orWhere('firstName','like',"%$keyword%")
+                       ->orWhere('lastName','like',"%$keyword%");
+
+               });
+
     }
 
 
